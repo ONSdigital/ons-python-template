@@ -1,0 +1,120 @@
+---
+# This workflow is triggered on push events and renames the project from template
+# This should be the first workflow to run after the project is created from the 'Use this template' feature
+
+name: Rename Project from Template
+
+on: # yamllint disable-line rule:truthy
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: "${{ github.head_ref || github.ref }}-${{ github.workflow }}"
+  cancel-in-progress: true
+
+jobs:
+  rename-project:
+    name: Rename Project
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # by default, it uses a depth of 1
+          # this fetches all history so that we can read each commit
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+
+      - name: Check Repository is not a Template
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const repo = await github.rest.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            core.exportVariable("is_template", repo.data.is_template);
+
+      - name: Set Environment Variables and Check Visibility
+        if: env.is_template == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const repoName = context.repo.repo.replace(/-/g, '_').toLowerCase();
+            const repoUrlName = context.repo.repo;
+            const repoOwner = context.repo.owner;
+            core.exportVariable('REPOSITORY_NAME', repoName);
+            core.exportVariable('REPOSITORY_URLNAME', repoUrlName);
+            core.exportVariable('REPOSITORY_OWNER', repoOwner);
+
+            const repo = await github.rest.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            const description = repo.data.description;
+            const visibility = repo.data.visibility;
+            const isPublic = visibility === 'public';
+
+            core.exportVariable('REPOSITORY_DESCRIPTION', description);
+            core.exportVariable('is_public', isPublic);
+
+      - name: Rename Repository Check
+        if: env.is_template == 'false'
+        run: |
+          echo "needs_renaming=$(ls .github/template.yml &> /dev/null && echo true || echo false)" >> "$GITHUB_ENV"
+
+      - name: Rename project-README.md to README.md
+        if: env.is_template == 'false' && env.needs_renaming == 'true'
+        run: |
+          mv project-README.md README.md
+
+      - name: Add markdown-link-check Config File
+        if: env.is_template == 'false' && env.needs_renaming == 'true'
+        run: |
+          file=".github/linters/.markdown-link-check.json"
+          mv -f .github/linters/.project-markdown-link-check.json "$file"
+
+          if [ "$is_public" = false ]; then
+            new_pattern='{
+              "pattern": "author_name/project_urlname",
+              "reason": "Private repository"
+            }'
+            existing_patterns=$(jq '.ignorePatterns' "$file")
+            if [ "$existing_patterns" = "null" ]; then
+              jq '.ignorePatterns = [] | .ignorePatterns += [ '"$new_pattern"' ]' "$file" > tmpfile && mv tmpfile "$file"
+            else
+              jq '.ignorePatterns += [ '"$new_pattern"' ]' "$file" > tmpfile && mv tmpfile "$file"
+            fi
+          fi
+
+      - name: Rename the Project
+        if: env.is_template == 'false' && env.needs_renaming == 'true'
+        run: |
+          echo "Renaming the project with -a(author) ${{ env.REPOSITORY_OWNER }} -n(name) ${{ env.REPOSITORY_NAME }} \
+            -u(urlname) ${{ env.REPOSITORY_URLNAME }} \
+            -d(description) ${{ env.REPOSITORY_DESCRIPTION || env.REPOSITORY_URLNAME }}"
+
+          .github/rename_project.sh -a ${{ env.REPOSITORY_OWNER }} -n ${{ env.REPOSITORY_NAME }} \
+            -u ${{ env.REPOSITORY_URLNAME }} -d "${{ env.REPOSITORY_DESCRIPTION || env.REPOSITORY_URLNAME }}"
+
+      - name: Remove CodeQL Workflow
+        if: env.is_template == 'false' && env.needs_renaming == 'true' && env.is_public == 'false'
+        run: |
+          rm ".github/workflows/codeql.yml"
+          # Remove the CodeQL badge from the README
+          sed -i '/\[!\[Build Status\].*codeql\.yml.*\]/d' README.md
+
+      - name: Cleanup
+        if: env.is_template == 'false' && env.needs_renaming == 'true'
+        run: |
+          rm .github/rename_project.sh
+          rm .github/workflows/rename-project.yml
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        if: env.is_template == 'false'
+        with:
+          commit_message: ✅ Ready to clone and use
+          push_options: --force

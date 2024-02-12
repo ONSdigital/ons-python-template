@@ -1,0 +1,40 @@
+---
+name: CI
+
+on: # yamllint disable-line rule:truthy
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - "**/*.md"
+      - .gitignore
+      - LICENSE
+
+concurrency:
+  group: "${{ github.head_ref || github.ref }}-${{ github.workflow }}"
+  cancel-in-progress: true
+
+jobs:
+  lint-test:
+    name: Lint and Test
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.7.1
+          virtualenvs-create: true
+          virtualenvs-in-project: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+          cache: poetry
+      - name: Install dependencies
+        run: |
+          make install-dev
+      - name: Lint Python
+        run: make lint
+      - name: Test
+        run: make test
