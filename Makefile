@@ -7,32 +7,21 @@ all: ## Show the available make targets.
 	@echo "Targets:"
 	@fgrep "##" Makefile | fgrep -v fgrep
 
-.PHONY: format
-format:  ## Format the code.
-	poetry run black .
-	poetry run ruff check . --fix
-
 .PHONY: lint
-lint:  ## Run all linters (black/ruff/pylint/mypy).
-	poetry run black --check .
-	poetry run ruff check .
-	make mypy
+lint:  ## Run Python linter
+	echo "Not implemented yet"
 
 .PHONY: test
-test:  ## Run the tests and check coverage.
-	poetry run pytest -n auto --cov=project_name --cov-report term-missing --cov-fail-under=100
-
-.PHONY: mypy
-mypy:  ## Run mypy.
-	poetry run mypy project_name
+test:  ## Run the tests
+	echo "Not implemented yet"
 
 .PHONY: install
 install:  ## Install the dependencies excluding dev.
-	poetry install --only main
+	poetry install --only main --no-root
 
 .PHONY: install-dev
 install-dev:  ## Install the dependencies including dev.
-	poetry install
+	poetry install --no-root
 
 .PHONY: megalint
 megalint:  ## Run the mega-linter.
@@ -43,8 +32,4 @@ megalint:  ## Run the mega-linter.
 
 .PHONY: clean
 clean: ## Clean the temporary files.
-	rm -rf .pytest_cache
-	rm -rf .mypy_cache
-	rm -rf .coverage
-	rm -rf .ruff_cache
 	rm -rf megalinter-reports

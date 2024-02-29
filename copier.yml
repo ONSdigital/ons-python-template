@@ -1,0 +1,114 @@
+# Subdirectory that contains the template. Allows template metadata to be separated from the template.
+_subdirectory: project_template
+
+# Require that the user has the specified Copier version installed.
+_min_copier_version: "9.1.0"
+
+# Tasks that are run after project is generated/updated
+_tasks:
+  - >-
+    {% if is_running_in_github_actions %}
+    cp {{ _copier_conf.src_path }}/.github/workflows/rename-project.yml {{ _copier_conf.dst_path }}/.github/workflows/rename-project.yml
+    {% endif %}
+
+# Questions to ask the user
+
+_message_before_copy: |
+  You'll be asked a series of questions whose answers will be used to generate a tailored project for you.
+
+repository_name:
+  type: str
+  help: What is your repository name? (e.g. my-awesome-project)
+  validator: >-
+    {% if not repository_name %}
+    The repository name is required.
+    {% endif %}
+
+    {% if not repository_name | regex_search('^[a-zA-Z0-9._-]{1,100}$') %}
+    The repository name is not valid. It must be 1-100 characters long and contain only letters, numbers, periods, hyphens, and underscores.
+    {% endif %}
+
+repository_description:
+  type: str
+  help: "What is your repository description?"
+  validator: >-
+    {% if not repository_description %}
+    The repository description is required.
+    {% endif %}
+
+repository_owner:
+  type: str
+  help: "What is your repository owner? (e.g. your GitHub username)"
+  default: "ONSdigital"
+
+repository_visibility:
+  type: str
+  help: "What is your repository visibility?"
+  default: "public"
+  choices:
+    - public
+    - internal
+    - private
+
+repository_slug:
+  type: str
+  help: "Not prompted. This is computed for re-use."
+  default: "{{ repository_name | lower | replace('-', '_') | replace(' ', '_') }}"
+  when: false
+
+is_public_repo:
+  type: bool
+  help: "Not prompted. This is computed for re-use."
+  default: "{{ repository_visibility == 'public' }}"
+  when: false
+
+module_name:
+  type: str
+  help: "What is your Python module name? (e.g. app/src/{{ repository_slug }})"
+  default: "{{ repository_slug }}"
+  validator: >-
+    {% if not (module_name | regex_search('^[a-z][a-z0-9\_\-]+$')) %}
+    Must use a lowercase letter followed by one or more of (a-z, 0-9, _, -).
+    {% endif %}
+
+enable_dependabot_version_updates:
+  type: bool
+  help: "Do you want to enable Dependabot version updates? (Default is Yes - Note: Security updates are always enabled)"
+  default: true
+
+dependabot_open_pull_requests_limit:
+  type: int
+  help: "Maximum number of open pull requests at once for Dependabot version updates"
+  default: 10
+  when: "{{ enable_dependabot_version_updates }}"
+
+enable_copier_updates:
+  type: bool
+  help: "Do you want to enable on demand Copier updates? (Pull in changes from the template) (Default is Yes)"
+  default: true
+
+is_running_in_github_actions:
+  type: bool
+  help: "Not prompted. This is computed for re-use."
+  default: false
+  when: false
+
+_message_after_copy: |
+  Your project "{{ repository_name }}" has been created successfully!
+
+  There are a few more manual steps to finish the setup.
+
+  Go to your project directory, and initialise a git repository:
+     > cd {{ _copier_conf.dst_path }}
+     > git init -b main
+     > git add .
+     > git commit -m "Initial commit"
+
+  Create a new repo in GitHub:
+  See: https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories
+
+  Push your project to the repository on GitHub:
+     > git remote add origin https://github.com/{{repository_owner}}/{{repository_name}}.git
+     > git push -u origin main
+
+  Follow steps in the [post-clone](https://github.com/ONSdigital/ons-python-template/README.md#post-clone-steps) section of the README to finish the setup.
