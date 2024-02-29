@@ -115,7 +115,7 @@ questions, Copier will generate the project for you.
 To generate the project run:
 
 ```bash
-copier --trust gh:ONSdigital/ons-python-template /path/to/your/new/project
+copier copy --trust gh:ONSdigital/ons-python-template /path/to/your/new/project
 ```
 
 Replace `/path/to/your/new/project` with the path to the directory where you want to create your new project. This
