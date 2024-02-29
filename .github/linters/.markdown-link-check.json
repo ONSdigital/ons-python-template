@@ -1,16 +1,11 @@
 {
   "ignorePatterns": [
     {
-      "pattern": "project_urlname",
-      "reason": "This is a template var that is replaced with the actual project link when the project is created."
-    },
-    {
-      "pattern": "ONSdigital/ons-template",
-      "reason": "Private repository"
-    },
-    {
-      "pattern": "ONSdigital/ons-python-template",
-      "reason": "Private repository"
+      "pattern": "ons-python-template/generate",
+      "reason": "Generate links require authentication"
     }
-  ]
+  ],
+  "retryOn429": true,
+  "retryCount": 3,
+  "fallbackRetryDelay": "30s"
 }
