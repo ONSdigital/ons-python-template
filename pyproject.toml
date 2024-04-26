@@ -14,7 +14,7 @@ copier = "^9.1.1"
 # :TODO: Remove pylint when ruff supports all pylint rules
 pylint = "^3.0.3"
 # :TODO: Remove black when ruff supports all black rules
-black = "^24.2.0"
+black = "^24.4.2"
 pytest = "^8.0.1"
 pytest-xdist = "^3.5.0"
 ruff = "^0.2.1"
