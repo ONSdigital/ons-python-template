@@ -16,7 +16,7 @@ pylint = "^3.0.3"
 # :TODO: Remove black when ruff supports all black rules
 black = "^24.2.0"
 pytest = "^8.0.1"
-pytest-xdist = "^3.5.0"
+pytest-xdist = "^3.6.1"
 ruff = "^0.2.1"
 pytest-cov = "^4.1.0"
 mypy = "^1.7.0"
