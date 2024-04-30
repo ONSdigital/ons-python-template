@@ -136,7 +136,7 @@ directory should match the name of the repository you want to create.
 
 #### Initialising a Git Repository and Pushing to GitHub
 
-**This step is only required if you answered `No` to the `set_up_git_repo` question. Otherwise, this would
+**This step is only required if you answered `No` to the `Do you want to set up the git repository?` question. Otherwise, this would
 have been automatically done for you.**
 
 1. Go to your project directory, and initialise a git repository and make the initial commit
@@ -186,7 +186,7 @@ Few key points to note are:
 - **[Security Alerts](https://github.com/ONSdigital/ons-template/wiki/6.2-Security)**: Make use of Secret scanning and
   Push protection. Dependabot alerts will be enabled by default when using this template.
 
-If you answered `Yes` to the `set_up_git_repo` question, then these settings would have been automatically configured
+If you answered `Yes` to the `Do you want to set up the git repository?` question, then these settings would have been automatically configured
 for you. However, it is recommended to review these settings to ensure they meet your requirements.
 
 #### 3. MegaLinter
