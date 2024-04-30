@@ -30,6 +30,10 @@ megalint:  ## Run the mega-linter.
 		-v $(shell pwd):/tmp/lint:rw \
 		oxsecurity/megalinter:v7
 
+.PHONY: update-template-packages
+update-template-packages:  ## Update the project using the initial copier template.
+	cd scripts/package_manager_helper && ./update_template_packages.sh && cd ../..
+
 .PHONY: clean
 clean: ## Clean the temporary files.
 	rm -rf megalinter-reports

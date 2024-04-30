@@ -1,0 +1,7 @@
+{%- macro package_manager_url() -%}
+    {%- if package_manager == "poetry" -%}
+        https://python-poetry.org/
+    {%- elif package_manager == "pipenv" -%}
+        https://pipenv.pypa.io/en/latest/
+    {%- endif -%}
+{%- endmacro -%}
