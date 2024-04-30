@@ -11,14 +11,38 @@ updates:
     schedule:
       interval: weekly
 
+    groups:
+      # Group updates into fewer pull requests
+      gh-security-updates:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+      gh-version-updates:
+        applies-to: version-updates
+        patterns:
+          - "*"
+
   # Enable Security updates for Python package manager
   - package-ecosystem: pip
 
     # When set to 0, version updates are disabled.
     open-pull-requests-limit: 10
 
-    # Look for a `pyproject.toml`/`requirements.txt/`pipfile.lock` in the `root` directory
+    # Look for a pyproject.toml/requirements.txt/Pipfile.lock in the root directory
     directory: /
     # Every weekday
     schedule:
       interval: daily
+
+    groups:
+      # Group updates into fewer pull requests
+      py-security-updates:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+      py-version-updates:
+        applies-to: version-updates
+        patterns:
+          - "*"

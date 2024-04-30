@@ -1,8 +1,7 @@
 {
   "ignorePatterns": [
     {
-      "pattern": "ons-python-template/generate",
-      "reason": "Generate links require authentication"
+      "pattern": "ons-python-template/generate"
     }
   ],
   "retryOn429": true,

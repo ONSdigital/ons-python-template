@@ -1,3 +1,4 @@
+---
 # Subdirectory that contains the template. Allows template metadata to be separated from the template.
 _subdirectory: project_template
 
@@ -7,12 +8,24 @@ _min_copier_version: "9.1.0"
 # Tasks that are run after project is generated/updated
 _tasks:
   - >-
-    {% if is_running_in_github_actions %}
+    {%- if is_gh_actions -%}
     cp {{ _copier_conf.src_path }}/.github/workflows/rename-project.yml {{ _copier_conf.dst_path }}/.github/workflows/rename-project.yml
     {% endif %}
+  - >-
+    SET_UP_GIT_REPO="{{ set_up_git_repo }}"
+    PACKAGE_MANAGER="{{ package_manager }}"
+    REPO_OWNER="{{ repository_owner }}"
+    REPO_NAME="{{ repository_name }}"
+    REPO_DESCRIPTION="{{ repository_description }}"
+    REPO_VISIBILITY="{{ repository_visibility }}"
+    DEFAULT_BRANCH="{{ default_branch }}"
+    DISMISS_STALE_REVIEWS="{{ dismiss_stale_reviews | lower }}"
+    REQUIRED_APPROVING_REVIEW_COUNT="{{ required_approving_review_count }}"
+    REQUIRE_LAST_PUSH_APPROVAL="{{ require_last_push_approval | lower }}"
+    REQUIRE_CONVERSATION_RESOLUTION="{{ require_conversation_resolution | lower }}"
+    ./copier_scripts/run_tasks.sh
 
 # Questions to ask the user
-
 _message_before_copy: |
   You'll be asked a series of questions whose answers will be used to generate a tailored project for you.
 
@@ -82,33 +95,93 @@ dependabot_open_pull_requests_limit:
   default: 10
   when: "{{ enable_dependabot_version_updates }}"
 
+package_manager:
+  type: str
+  help: "What Python package manager do you want to use?"
+  default: "poetry"
+  choices:
+    - poetry
+    - pipenv
+
+set_up_git_repo:
+  type: bool
+  help: "Do you want to set up the git repository? (Create/Push/Configure the repo in GitHub) (Default is Yes)"
+  default: "{{ not is_gh_actions }}"
+  when: "{{ not is_gh_actions }}"
+
+default_branch:
+  type: str
+  help: "What is your default branch name?"
+  default: "main"
+
+repo_settings:
+  type: str
+  help: "Would you like to customise your repository settings or apply recommended settings? (Default is recommended)"
+  default: "recommended"
+  choices:
+    - recommended
+    - custom
+  when: "{{ set_up_git_repo }}"
+
+dismiss_stale_reviews:
+  type: bool
+  help: "Dismiss stale pull request approvals when new commits are pushed? (Default is Yes)"
+  default: true
+  when: "{{ repo_settings == 'custom' }}"
+
+required_approving_review_count:
+  type: int
+  help: "Number of approving reviews required to merge a pull request (Default is 1)"
+  default: 1
+  when: "{{ repo_settings == 'custom' }}"
+
+require_last_push_approval:
+  type: bool
+  help: "Require approval of the most recent reviewable push?. (Default is Yes)"
+  default: true
+  when: "{{ repo_settings == 'custom' }}"
+
+require_conversation_resolution:
+  type: bool
+  help: "Require conversation resolution before merging?. (Default is Yes)"
+  default: true
+  when: "{{ repo_settings == 'custom' }}"
+
+# :TODO: Currently updates are not supported until Copier changes how tasks work: https://github.com/copier-org/copier/issues/240:
+# Tasks currently execute twice on updates, which causes issues with the current setup
 enable_copier_updates:
   type: bool
   help: "Do you want to enable on demand Copier updates? (Pull in changes from the template) (Default is Yes)"
-  default: true
+  default: false
+  when: false
 
-is_running_in_github_actions:
+# Vars for convenience, these are not prompted but computed for ease of use
+is_gh_actions:
   type: bool
   help: "Not prompted. This is computed for re-use."
   default: false
   when: false
 
-_message_after_copy: |
-  Your project "{{ repository_name }}" has been created successfully!
+poetry_copier:
+  type: bool
+  help: "Not prompted. This is computed for re-use."
+  default: "{{ package_manager == 'poetry' and enable_copier_updates }}"
+  when: false
 
-  There are a few more manual steps to finish the setup.
+not_poetry_copier:
+  type: bool
+  help: "Not prompted. This is computed for re-use."
+  default: "{{ package_manager == 'poetry' and not enable_copier_updates }}"
+  when: false
 
-  Go to your project directory, and initialise a git repository:
-     > cd {{ _copier_conf.dst_path }}
-     > git init -b main
-     > git add .
-     > git commit -m "Initial commit"
+pipenv_copier:
+  type: bool
+  help: "Not prompted. This is computed for re-use."
+  default: "{{ package_manager == 'pipenv' and enable_copier_updates }}"
+  when: false
 
-  Create a new repo in GitHub:
-  See: https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories
-
-  Push your project to the repository on GitHub:
-     > git remote add origin https://github.com/{{repository_owner}}/{{repository_name}}.git
-     > git push -u origin main
-
-  Follow steps in the [post-clone](https://github.com/ONSdigital/ons-python-template/README.md#post-clone-steps) section of the README to finish the setup.
+not_pipenv_copier:
+  type: bool
+  help: "Not prompted. This is computed for re-use."
+  default: "{{ package_manager == 'pipenv' and not enable_copier_updates }}"
+  when: false

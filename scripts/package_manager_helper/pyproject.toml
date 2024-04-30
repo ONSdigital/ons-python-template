@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "{{ repository_name }}"
+version = "0.1.0"
+description = "{{ repository_description }}"
+authors = ["{{ repository_owner }}"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+# :TODO: Remove pylint when ruff supports all pylint rules
+# :TODO: Remove black when ruff supports all black rules

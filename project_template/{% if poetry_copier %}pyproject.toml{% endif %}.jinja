@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "{{ repository_name }}"
+version = "0.1.0"
+description = "{{ repository_description }}"
+authors = ["{{ repository_owner }}"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+# :TODO: Remove pylint when ruff supports all pylint rules
+# :TODO: Remove black when ruff supports all black rules
+copier = "^9.2.0"
+pylint = "^3.1.0"
+black = "^24.4.1"
+pytest = "^8.1.1"
+pytest-xdist = "^3.5.0"
+ruff = "^0.4.2"
+pytest-cov = "^5.0.0"
+mypy = "^1.10.0"

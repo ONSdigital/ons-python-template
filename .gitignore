@@ -162,4 +162,8 @@ cython_debug/
 # Ruff
 .ruff_cache/
 
+# Megalinter
 megalinter-reports/
+
+# DS_Store files
+.DS_Store

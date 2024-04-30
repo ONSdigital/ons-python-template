@@ -17,30 +17,38 @@ clean: ## Clean the temporary files.
 
 .PHONY: format
 format:  ## Format the code.
-	poetry run black .
-	poetry run ruff check . --fix
+	{{ package_manager }} run black .
+	{{ package_manager }} run ruff check . --fix
 
 .PHONY: lint
 lint:  ## Run all linters (black/ruff/pylint/mypy).
-	poetry run black --check .
-	poetry run ruff check .
+	{{ package_manager }} run black --check .
+	{{ package_manager }} run ruff check .
 	make mypy
 
 .PHONY: test
 test:  ## Run the tests and check coverage.
-	poetry run pytest -n auto --cov={{ module_name }} --cov-report term-missing --cov-fail-under=100
+	{{ package_manager }} run pytest -n auto --cov={{ module_name }} --cov-report term-missing --cov-fail-under=100
 
 .PHONY: mypy
 mypy:  ## Run mypy.
-	poetry run mypy {{ module_name }}
+	{{ package_manager }} run mypy {{ module_name }}
 
 .PHONY: install
 install:  ## Install the dependencies excluding dev.
+	{% if package_manager == "poetry" -%}
 	poetry install --only main --no-root
+	{%- elif package_manager == "pipenv" -%}
+	pipenv install
+	{%- endif %}
 
 .PHONY: install-dev
 install-dev:  ## Install the dependencies including dev.
+	{% if package_manager == "poetry" -%}
 	poetry install --no-root
+	{%- elif package_manager == "pipenv" -%}
+	pipenv install --dev
+	{%- endif %}
 
 .PHONY: megalint
 megalint:  ## Run the mega-linter.
@@ -51,5 +59,5 @@ megalint:  ## Run the mega-linter.
 {% if enable_copier_updates %}
 .PHONY: copier-update
 copier-update:  ## Update the project using the initial copier template.
-	poetry run copier update
+	{{ package_manager }} run copier update --trust
 {%- endif -%}

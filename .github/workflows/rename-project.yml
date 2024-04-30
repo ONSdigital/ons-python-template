@@ -65,11 +65,7 @@ jobs:
 
       - name: Install Poetry
         if: env.is_template == 'false' && env.needs_renaming == 'true'
-        uses: snok/install-poetry@v1
-        with:
-          version: 1.7.1
-          virtualenvs-create: true
-          virtualenvs-in-project: false
+        run: pipx install poetry==1.7.1
 
       - name: Set up Python
         if: env.is_template == 'false' && env.needs_renaming == 'true'
@@ -98,7 +94,7 @@ jobs:
             --data "repository_description=${{ env.REPOSITORY_DESCRIPTION || env.REPOSITORY_NAME }}" \
             --data "repository_owner=${{ env.REPOSITORY_OWNER }}" \
             --data "repository_visibility=${{ env.REPOSITORY_VISIBILITY }}" \
-            --data "is_running_in_github_actions=true"
+            --data "is_gh_actions=true"
 
           # Remove existing files and directories from the current directory including hidden files
           shopt -s dotglob
