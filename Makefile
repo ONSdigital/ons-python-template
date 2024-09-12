@@ -40,4 +40,4 @@ clean: ## Clean the temporary files.
 
 .PHONY: run
 run:  ## Run the application
-	poetry run python ons_python
+	poetry run python {{module_name}}
