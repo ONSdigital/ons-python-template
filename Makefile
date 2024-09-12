@@ -37,3 +37,7 @@ update-template-packages:  ## Update the project using the initial copier templa
 .PHONY: clean
 clean: ## Clean the temporary files.
 	rm -rf megalinter-reports
+
+.PHONY: run
+run:  ## Run the application
+	poetry run python ons_python
