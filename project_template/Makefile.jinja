@@ -24,6 +24,7 @@ format:  ## Format the code.
 lint:  ## Run all linters (black/ruff/pylint/mypy).
 	{{ package_manager }} run black --check .
 	{{ package_manager }} run ruff check .
+	{{ package_manager }} run pylint {{ module_name }}
 	make mypy
 
 .PHONY: test
