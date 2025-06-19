@@ -110,11 +110,6 @@ jobs:
           # Clean up temporary directory
           rm -rf "$temp_dir"
 
-      - name: Cleanup
-        if: env.is_template == 'false' && env.needs_renaming == 'true'
-        run: |
-          rm .github/workflows/rename-project.yml
-
       - name: Create Pull Request
         if: env.is_template == 'false' && env.needs_renaming == 'true'
         uses: peter-evans/create-pull-request@v6
@@ -141,3 +136,14 @@ jobs:
           delete-branch: true
           base: main
           signoff: true
+          add-paths: |
+            .
+          
+      - name: Cleanup
+        if: env.is_template == 'false' && env.needs_renaming == 'true'
+        run: |
+          # Remove the rename workflow file in the PR branch
+          git checkout template-initialization
+          git rm .github/workflows/rename-project.yml
+          git commit -m "Remove template initialization workflow"
+          git push origin template-initialization
