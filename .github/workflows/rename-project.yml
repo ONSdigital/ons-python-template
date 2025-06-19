@@ -97,6 +97,9 @@ jobs:
             --data "repository_visibility=${{ env.REPOSITORY_VISIBILITY }}" \
             --data "is_gh_actions=true"
 
+          # Remove problematic workflow files that require special permissions
+          rm -f "$temp_dir/.github/workflows/mega-linter.yml"
+
           # Remove existing files and directories from the current directory including hidden files
           shopt -s dotglob
           rm -rf ./*
