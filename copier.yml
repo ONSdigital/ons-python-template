@@ -31,14 +31,22 @@ _message_before_copy: |
 
 repository_name:
   type: str
-  help: What is your repository name? (e.g. my-awesome-project)
+  help: What is your repository name? (Use hyphens or underscores for readability. Avoid special characters, spaces, or uppercase letters - e.g. my-awesome-project)
   validator: >-
     {% if not repository_name %}
     The repository name is required.
     {% endif %}
 
-    {% if not repository_name | regex_search('^[a-zA-Z0-9._-]{1,100}$') %}
-    The repository name is not valid. It must be 1-100 characters long and contain only letters, numbers, periods, hyphens, and underscores.
+    {% if not repository_name | regex_search('^[a-z0-9._-]{1,100}$') %}
+    Repository names should be clear, descriptive, and follow ONS naming conventions: use lowercase letters, numbers, hyphens, or underscores only. Avoid special characters, spaces, or uppercase letters. Must be 1-100 characters long.
+    {% endif %}
+
+    {% if repository_name | regex_search('[A-Z]') %}
+    Repository name contains uppercase letters. Please use lowercase only as per ONS GitHub Usage Policy (Section 5.3.2).
+    {% endif %}
+
+    {% if repository_name | regex_search('[ ]') %}
+    Repository name contains spaces. Please use hyphens (-) or underscores (_) instead as per ONS GitHub Usage Policy (Section 5.3.2).
     {% endif %}
 
 repository_description:
