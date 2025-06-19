@@ -142,8 +142,28 @@ jobs:
       - name: Cleanup
         if: env.is_template == 'false' && env.needs_renaming == 'true'
         run: |
+          # Configure git user
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
           # Remove the rename workflow file in the PR branch
           git checkout template-initialization
           git rm .github/workflows/rename-project.yml
           git commit -m "Remove template initialization workflow"
           git push origin template-initialization
+
+      - name: Auto-merge PR
+        if: env.is_template == 'false' && env.needs_renaming == 'true'
+        run: |
+          # Wait a moment for the PR branch to be fully updated
+          sleep 5
+          
+          # Find and merge the PR using GitHub CLI
+          gh pr merge template-initialization \
+            --squash \
+            --admin \
+            --delete-branch \
+            --subject "🚀 Initialize repository from template" \
+            --body "Template initialization completed successfully"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
