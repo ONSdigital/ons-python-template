@@ -62,6 +62,12 @@ This template includes a number of features to help you get started developing y
 - Extensible Python linting and formatting configuration using pyproject.toml, ensuring adherence to best practices.
 - Linting the rest of the repository files/formats such as YAML, GitHub Actions, Shell scripts etc.
   using [Mega Linter](https://github.com/oxsecurity/megalinter)
+- **GitHub Usage Policy Compliance** including:
+    - CODEOWNERS file generation
+    - Repository naming validation
+    - PIRR template for private/internal repositories
+    - Compliance checklist in generated README
+    - Enhanced security patterns in .gitignore
 
 ## Getting Started
 
@@ -191,7 +197,17 @@ If you answered `Yes` to the `Do you want to set up the git repository?` questio
 automatically configured for you. However, it is recommended to review these settings to ensure they meet your
 requirements.
 
-#### 3. MegaLinter
+#### 3. GitHub Usage Policy Compliance
+
+This template helps ensure compliance with the ONS GitHub Usage Policy by automatically including:
+
+- **CODEOWNERS file**: Automatically created with the specified code owners for the repository
+- **Repository naming validation**: Enforces lowercase, hyphen/underscore naming conventions
+- **Private/Internal Repository Reasoning Record (PIRR)**: Generated for non-public repositories with guidance for completion
+- **Compliance checklist**: Added to the generated README to guide developers through required steps
+- **Enhanced .gitignore**: Includes patterns to prevent accidental commit of sensitive files
+
+#### 4. MegaLinter
 
 ##### Reducing the Docker image size for MegaLinter
 
