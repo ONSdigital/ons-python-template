@@ -54,6 +54,11 @@ repository_owner:
   help: "What is your repository owner? (e.g. your GitHub username)"
   default: "ONSdigital"
 
+code_owners:
+  type: str
+  help: "Who should be the code owners for this repository? (GitHub username or team, e.g. @username or @ONSdigital/team-name)"
+  default: "@{{ repository_owner }}"
+
 repository_visibility:
   type: str
   help: "What is your repository visibility?"
