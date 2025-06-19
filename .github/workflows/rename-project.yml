@@ -111,8 +111,28 @@ jobs:
         run: |
           rm .github/workflows/rename-project.yml
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Create Pull Request
         if: env.is_template == 'false' && env.needs_renaming == 'true'
+        uses: peter-evans/create-pull-request@v5
         with:
-          commit_message: ✅ Ready to clone
-          push_options: --force
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: ✅ Ready to clone and use template
+          title: '🚀 Initialize repository from template'
+          body: |
+            This PR initializes the repository from the ONS Python template.
+            
+            ## Changes
+            - Repository renamed and configured
+            - Project files updated with repository-specific information
+            - Template scripts removed
+            
+            ## Next Steps
+            After merging this PR:
+            - [ ] Update CODEOWNERS with appropriate team members
+            - [ ] Complete README with project-specific information
+            - [ ] Review and update dependencies as needed
+            
+            This PR was automatically created by the template initialization process.
+          branch: template-initialization
+          delete-branch: true
+          base: main
