@@ -17,18 +17,18 @@ test:  ## Run the tests
 
 .PHONY: install
 install:  ## Install the dependencies excluding dev.
-	poetry install --only main --no-root
+	poetry install --only main
 
 .PHONY: install-dev
 install-dev:  ## Install the dependencies including dev.
-	poetry install --no-root
+	poetry install
 
 .PHONY: megalint
 megalint:  ## Run the mega-linter.
 	docker run --platform linux/amd64 --rm \
 		-v /var/run/docker.sock:/var/run/docker.sock:rw \
 		-v $(shell pwd):/tmp/lint:rw \
-		oxsecurity/megalinter:v7
+		oxsecurity/megalinter:v8
 
 .PHONY: update-template-packages
 update-template-packages:  ## Update the project using the initial copier template.

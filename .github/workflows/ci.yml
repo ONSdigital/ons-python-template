@@ -1,5 +1,8 @@
 ---
 name: CI
+permissions:
+  contents: read
+  pull-requests: write
 
 on: # yamllint disable-line rule:truthy
   push:
@@ -18,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Poetry
-        run: pipx install poetry==1.7.1
+        run: pipx install poetry==1.8.3
 
       - name: Set up Python
         uses: actions/setup-python@v5

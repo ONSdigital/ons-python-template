@@ -37,7 +37,7 @@ mypy:  ## Run mypy.
 .PHONY: install
 install:  ## Install the dependencies excluding dev.
 	{% if package_manager == "poetry" -%}
-	poetry install --only main --no-root
+	poetry install --only main
 	{%- elif package_manager == "pipenv" -%}
 	pipenv install
 	{%- endif %}
@@ -45,7 +45,7 @@ install:  ## Install the dependencies excluding dev.
 .PHONY: install-dev
 install-dev:  ## Install the dependencies including dev.
 	{% if package_manager == "poetry" -%}
-	poetry install --no-root
+	poetry install
 	{%- elif package_manager == "pipenv" -%}
 	pipenv install --dev
 	{%- endif %}
@@ -55,7 +55,7 @@ megalint:  ## Run the mega-linter.
 	docker run --platform linux/amd64 --rm \
 		-v /var/run/docker.sock:/var/run/docker.sock:rw \
 		-v $(shell pwd):/tmp/lint:rw \
-		oxsecurity/megalinter:v7
+		oxsecurity/megalinter:v8
 {% if enable_copier_updates %}
 .PHONY: copier-update
 copier-update:  ## Update the project using the initial copier template.
