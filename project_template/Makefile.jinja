@@ -34,6 +34,10 @@ test:  ## Run the tests and check coverage.
 mypy:  ## Run mypy.
 	{{ package_manager }} run mypy {{ module_name }}
 
+.PHONY: run
+run:  ## Run the python script
+	{{ package_manager }} run python -m {{ module_name }}
+
 .PHONY: install
 install:  ## Install the dependencies excluding dev.
 	{% if package_manager == "poetry" -%}
