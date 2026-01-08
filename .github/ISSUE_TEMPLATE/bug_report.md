@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-### Summary
+## Summary
 
 Provide a brief summary of the issue you're encountering.
 
@@ -19,15 +19,15 @@ Describe the steps you took when you encountered the bug:
 2. ...
 3. ...
 
-### Expected Behavior
+## Expected Behavior
 
 What did you expect to happen when you followed the steps above?
 
-### Actual Behavior
+## Actual Behavior
 
 Describe what actually happened. Include details like error messages or unexpected outcomes.
 
-### Technical Details
+## Technical Details
 
 Any relevant technical information. Include as much information as possible, including:
 
@@ -35,10 +35,10 @@ Any relevant technical information. Include as much information as possible, inc
 - **Browser/Application Version**:
 - **Additional relevant software versions**:
 
-### Proposed Solutions (Optional)
+## Proposed Solutions (Optional)
 
 If you have any suggestions on how to fix this issue, please share them here.
 
-### Screenshots
+## Screenshots
 
 Attach any screenshots that help illustrate the issue.
