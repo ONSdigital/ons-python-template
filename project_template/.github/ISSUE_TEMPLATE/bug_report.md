@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-### Summary
+## Summary
 
 Provide a brief summary of the issue you're encountering.
 
