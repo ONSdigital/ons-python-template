@@ -1,2 +1,28 @@
+from decimal import Decimal
+
+from {{module_name}}.calculator import Calculator
+
 def main() -> None:
-    pass
+    calculator = Calculator()
+
+    total = calculator.add(Decimal("10.50"))
+    print(f"After add: {total}")
+
+    total = calculator.subtract(Decimal("2.25"))
+    print(f"After subtract: {total}")
+
+    total = calculator.multiply(Decimal("3"))
+    print(f"After multiply: {total}")
+
+    try:
+        total = calculator.divide(Decimal("4"))
+        print(f"After divide: {total}")
+    except ValueError as exc:
+        print(f"Calculation failed: {exc}")
+
+    calculator.reset_cumulative_total()
+    print(f"After reset: {calculator.cumulative_total}")
+
+
+if __name__ == "__main__":
+    main()
