@@ -15,11 +15,8 @@ def main() -> None:
     total = calculator.multiply(Decimal("3"))
     print(f"After multiply: {total}")
 
-    try:
-        total = calculator.divide(Decimal("4"))
-        print(f"After divide: {total}")
-    except ValueError as exc:
-        print(f"Calculation failed: {exc}")
+    total = calculator.divide(Decimal("4"))
+    print(f"After divide: {total}")
 
     calculator.reset_cumulative_total()
     print(f"After reset: {calculator.cumulative_total}")
