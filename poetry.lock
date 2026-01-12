@@ -110,14 +110,14 @@ markers = {dev = "platform_system == \"Windows\" or sys_platform == \"win32\""}
 
 [[package]]
 name = "copier"
-version = "9.11.0"
+version = "9.11.1"
 description = "A library for rendering project templates."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "copier-9.11.0-py3-none-any.whl", hash = "sha256:628adac090f7b333bb64bf5cab03456b99971a77e4d5b2b979e30b8451cbda9d"},
-    {file = "copier-9.11.0.tar.gz", hash = "sha256:e73d6989fa140b621a5c571984c46122704086a9caa84a6e07699a5234d297ab"},
+    {file = "copier-9.11.1-py3-none-any.whl", hash = "sha256:e23c4b3c0c1687c519d8ae62496507164cc482b96af9e3ea7851ce02b64eb978"},
+    {file = "copier-9.11.1.tar.gz", hash = "sha256:50e5a39b7dde94ad7a3b66b5a64070359df532c13d64dabb89dde81f7c7347eb"},
 ]
 
 [package.dependencies]
@@ -1229,4 +1229,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "8a3613fe32da32973d4e50f08842ebf6945ba8331b253372ed0d522fba45ea2d"
+content-hash = "7a2876fa630ceb6bbf6d7e3278a4a9a3bb8e5f8cd0a918af21b85d0d149d26e4"
