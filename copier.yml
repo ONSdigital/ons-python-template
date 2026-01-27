@@ -54,6 +54,14 @@ repository_owner:
   help: "What is your repository owner? (e.g. your GitHub username)"
   default: "ONSdigital"
 
+code_owner:
+  type: str
+  help: "What is your CODEOWNERS default? (e.g. @org/team or @username)"
+  validator: >-
+    {% if not code_owner.startswith('@') %}
+    CODEOWNERS must start with '@' (e.g. @username or @org/team)
+    {% endif %}
+
 repository_visibility:
   type: str
   help: "What is your repository visibility?"
