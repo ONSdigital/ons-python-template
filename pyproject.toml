@@ -9,16 +9,16 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
-copier = "^9.11.3"
+copier = "^9.13.0"
 
 [tool.poetry.group.dev.dependencies]
 # :TODO: Remove pylint when ruff supports all pylint rules
-pylint = "^4.0.4"
+pylint = "^4.0.5"
 # :TODO: Remove black when ruff supports all black rules
-black = "^26.1.0"
+black = "^26.3.0"
 pytest = "^9.0.2"
 pytest-xdist = "^3.6.1"
-ruff = "^0.14.14"
+ruff = "^0.15.5"
 pytest-cov = "^7.0.0"
 mypy = "^1.19.1"
 
