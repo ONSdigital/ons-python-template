@@ -416,7 +416,7 @@ There are many alternatives to the tools used in this template, and you may pref
 
 ## Future Plans
 
-- Add tests
+- Extend test suite
 - Add more documentation and developer guidance
 - Add support for pre-commit hooks
 - Further customisation options for the template:
