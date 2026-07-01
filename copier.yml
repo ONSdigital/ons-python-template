@@ -110,6 +110,17 @@ package_manager:
   choices:
     - poetry
     - pipenv
+    - uv
+
+confirm_uv_prerelease:
+  type: bool
+  help: "uv is still pre-v1, so some project-management behaviour may change in future releases. Do you want to use uv for this project?"
+  default: true
+  when: "{{ package_manager == 'uv' }}"
+  validator: >-
+    {% if package_manager == 'uv' and not confirm_uv_prerelease %}
+    You must confirm the use of uv to continue because uv is not v1 yet.
+    {% endif %}
 
 set_up_git_repo:
   type: bool
@@ -176,7 +187,7 @@ poetry_copier:
   default: "{{ package_manager == 'poetry' and enable_copier_updates }}"
   when: false
 
-not_poetry_copier:
+poetry_no_copier:
   type: bool
   help: "Not prompted. This is computed for re-use."
   default: "{{ package_manager == 'poetry' and not enable_copier_updates }}"
@@ -188,8 +199,20 @@ pipenv_copier:
   default: "{{ package_manager == 'pipenv' and enable_copier_updates }}"
   when: false
 
-not_pipenv_copier:
+pipenv_no_copier:
   type: bool
   help: "Not prompted. This is computed for re-use."
   default: "{{ package_manager == 'pipenv' and not enable_copier_updates }}"
+  when: false
+
+uv_copier:
+  type: bool
+  help: "Not prompted. This is computed for re-use."
+  default: "{{ package_manager == 'uv' and enable_copier_updates }}"
+  when: false
+
+uv_no_copier:
+  type: bool
+  help: "Not prompted. This is computed for re-use."
+  default: "{{ package_manager == 'uv' and not enable_copier_updates }}"
   when: false

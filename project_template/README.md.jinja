@@ -43,9 +43,13 @@ To get a local copy up and running, follow these simple steps.
 
 Ensure you have the following installed:
 
-1. **Python**: Version specified in `.python-version`. We recommend using [pyenv](https://github.com/pyenv/pyenv) for
-   managing Python versions.
-2. **[{{ package_manager | title }}]({{ macros.package_manager_url() }})**: This is used to manage package dependencies and virtual
+1. **Python**: Version specified in `.python-version`.
+   {%- if package_manager == "uv" %}
+   We recommend using [uv](https://docs.astral.sh/uv/) to install and pin the project Python version.
+   {%- else %}
+   We recommend using [pyenv](https://github.com/pyenv/pyenv) for managing Python versions.
+   {%- endif %}
+2. **[{{ macros.package_manager_name() }}]({{ macros.package_manager_url() }})**: This is used to manage package dependencies and virtual
    environments.
 3. **[Docker](https://docs.docker.com/engine/install/)**
 4. **Operation System**: Ubuntu/MacOS
@@ -60,8 +64,16 @@ Ensure you have the following installed:
 
 2. Install dependencies
 
-   [{{ package_manager | title }}]({{ macros.package_manager_url() }}) is used to manage dependencies in this project. For more information, read
-   the [{{ package_manager | title }} documentation]({{ macros.package_manager_url() }}).
+   [{{ macros.package_manager_name() }}]({{ macros.package_manager_url() }}) is used to manage dependencies in this project. For more information, read
+   the [{{ macros.package_manager_name() }} documentation]({{ macros.package_manager_url() }}).
+
+   {%- if package_manager == "uv" %}
+   To install the Python version pinned for this project, run:
+
+   ```bash
+   uv python install
+   ```
+   {%- endif %}
 
    To install all dependencies, including development dependencies, run:
 

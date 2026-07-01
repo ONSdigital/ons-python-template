@@ -13,7 +13,7 @@ lint:  ## Run Python linter
 
 .PHONY: test
 test:  ## Run the tests
-	poetry run pytest tests
+	poetry run pytest -n auto tests
 
 .PHONY: install
 install:  ## Install the dependencies excluding dev.
@@ -31,7 +31,7 @@ megalint:  ## Run the mega-linter.
 		oxsecurity/megalinter:v8
 
 .PHONY: update-template-packages
-update-template-packages:  ## Update the project using the initial copier template.
+update-template-packages:  ## Refresh package-manager template files and lockfiles.
 	cd scripts/package_manager_helper && ./update_template_packages.sh && cd ../..
 
 .PHONY: clean

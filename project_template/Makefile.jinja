@@ -44,6 +44,8 @@ install:  ## Install the dependencies excluding dev.
 	poetry install --only main
 	{%- elif package_manager == "pipenv" -%}
 	pipenv install
+	{%- elif package_manager == "uv" -%}
+	uv sync --no-dev
 	{%- endif %}
 
 .PHONY: install-dev
@@ -52,6 +54,8 @@ install-dev:  ## Install the dependencies including dev.
 	poetry install
 	{%- elif package_manager == "pipenv" -%}
 	pipenv install --dev
+	{%- elif package_manager == "uv" -%}
+	uv sync
 	{%- endif %}
 
 .PHONY: megalint

@@ -39,8 +39,8 @@ template.
 
 This template includes a number of features to help you get started developing your Python project quickly:
 
-- Python package/environment management with [Poetry](https://python-poetry.org/)
-  or [Pipenv](https://pipenv.pypa.io/en/latest/)
+- Python package/environment management with [Poetry](https://python-poetry.org/),
+  [Pipenv](https://pipenv.pypa.io/en/latest/), or [uv](https://docs.astral.sh/uv/)
 - Python Linting/Formatting with:
     - [Ruff](https://github.com/astral-sh/ruff) - An all-in-one alternative to tools such as flake8, isort, pydocstyle,
       pyupgrade, autoflake etc.
@@ -102,7 +102,8 @@ To get started:
 
 #### Prerequisites
 
-1. **Python 3.10+**: We recommend using [pyenv](https://github.com/pyenv/pyenv) for managing Python versions.
+1. **Python 3.10+**: We recommend using [pyenv](https://github.com/pyenv/pyenv) or
+   [uv](https://docs.astral.sh/uv/) for managing Python versions.
 2. **[Pip](https://pip.pypa.io/en/stable/installation/) or [Pipx](https://pipx.pypa.io/stable/)**
 3. **[Copier](https://github.com/copier-org/copier)**: Install Copier using pip or pipx.
 
@@ -239,10 +240,11 @@ make copier-update
 ```
 
 Copier will ask you all questions again, but default values will be those you answered last time. Just hit Enter to
-accept those defaults, or change them if needed or you can use `poetry run copier update --force` instead to avoid
-answering the questions again.
+accept those defaults, or change them if needed or you can use your chosen package manager to run
+`copier update --force` instead to avoid answering the questions again.
 
-For more see [Copier docs](https://copier.readthedocs.io/en/stable/updating/) and `poetry run copier --help-all`.
+For more see [Copier docs](https://copier.readthedocs.io/en/stable/updating/) and your package manager's
+`copier --help-all` wrapper command.
 </details>
 
 ## Structure
@@ -277,16 +279,17 @@ The structure of the templated repo is as follows:
 ├── .gitignore                        # Specifies intentionally untracked files to ignore when using Git, like build outputs and temporary files.
 ├── .mega-linter.yml                  # Configuration file for MegaLinter, specifying the linters and code analysers to be used.
 ├── .pylintrc                         # Configuration file for Pylint.
-├── .python-version                   # Specifies the Python version to be used with pyenv.
+├── .python-version                   # Specifies the Python version for the project. This can be used with pyenv or pinned via uv.
 ├── CODE_OF_CONDUCT.md                # A code of conduct for the project, outlining the standards of behaviour for contributors.
 ├── CONTRIBUTING.md                   # Guidelines for contributing to the project, including information on how to raise issues and submit pull requests.
 ├── LICENSE                           # The license under which the project is made available. (Public Repos Only)
 ├── Makefile                          # A script used with the make build automation tool, containing commands to automate common tasks.
 ├── PIRR.md                           # Private Internal Reasoning Record (PIRR) for the repository, documenting the reasoning for the private/internal status of the repository. (Private/Internal Repos Only)
 ├── poetry.lock                       # Lock file for Poetry, pinning exact versions of dependencies to ensure consistent builds. (Exists if poetry is selected as the package manager)
-├── pyproject.toml                    # Central project configuration file for Python, used by Poetry package manager and tools like Ruff, black etc.
+├── pyproject.toml                    # Central project configuration file for Python, used by Poetry or uv and tooling like Ruff, black etc.
 ├── Pipfile                           # Used by pipenv package manager to specify dependencies and their versions. (Exists if pipenv is selected as the package manager)
-├── Pipfile.lock                      # Lock file for Poetry, pinning exact versions of dependencies to ensure consistent builds. (Exists if pipenv is selected as the package manager)
+├── Pipfile.lock                      # Lock file for Pipenv, pinning exact versions of dependencies to ensure consistent builds. (Exists if pipenv is selected as the package manager)
+├── uv.lock                           # Lock file for uv, pinning exact versions of dependencies to ensure consistent builds. (Exists if uv is selected as the package manager)
 ├── README.md                         # The main README file providing an overview of the project, setup instructions, and other essential information.
 └── SECURITY.md                       # A security policy for the project, providing information on how to report security vulnerabilities.
 ```
@@ -307,7 +310,7 @@ prefer. See the [Alternatives Software/Tools][alternative-software-tools] sectio
   manage (install/update) them
   for you.*
 - *Poetry also creates a virtual environment for your project and manages the dependencies in that environment.*
-- *When running manually you can choose to use `pipenv` instead of `poetry` via the `package_manager` selection
+- *When running manually you can choose to use `pipenv` or `uv` instead of `poetry` via the `package_manager` selection
   question.*
 
 *2. What is Ruff and why use Ruff?*
@@ -430,6 +433,14 @@ There are many alternatives to the tools used in this template, and you may pref
 ## Development
 
 :TODO: Add instructions for development
+
+### Maintainer Commands
+
+Use `make update-template-packages` when you need to refresh the package-manager-specific template files under
+`project_template/` after changing the dependency sets or package-manager template configuration.
+
+This command regenerates the managed package files for Poetry, Pipenv, and uv, including the lockfiles copied into the
+template. It requires the relevant package-manager CLIs to be installed locally: `poetry`, `pipenv`, and `uv`.
 
 ## Contributing
 
