@@ -13,7 +13,7 @@ lint:  ## Run Python linter
 
 .PHONY: test
 test:  ## Run the tests
-	echo "Not implemented yet"
+	poetry run pytest tests
 
 .PHONY: install
 install:  ## Install the dependencies excluding dev.
