@@ -280,7 +280,7 @@ The structure of the templated repo is as follows:
 ├── .python-version                   # Specifies the Python version to be used with pyenv.
 ├── CODE_OF_CONDUCT.md                # A code of conduct for the project, outlining the standards of behaviour for contributors.
 ├── CONTRIBUTING.md                   # Guidelines for contributing to the project, including information on how to raise issues and submit pull requests.
-├── LICENSE                           # The license under which the project is made available.
+├── LICENSE                           # The license under which the project is made available. (Public Repos Only)
 ├── Makefile                          # A script used with the make build automation tool, containing commands to automate common tasks.
 ├── PIRR.md                           # Private Internal Reasoning Record (PIRR) for the repository, documenting the reasoning for the private/internal status of the repository. (Private/Internal Repos Only)
 ├── poetry.lock                       # Lock file for Poetry, pinning exact versions of dependencies to ensure consistent builds. (Exists if poetry is selected as the package manager)
