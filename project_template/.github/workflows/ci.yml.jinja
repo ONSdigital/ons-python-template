@@ -23,7 +23,7 @@ jobs:
           persist-credentials: false
       {%- if package_manager == 'poetry' %}
       - name: Install Poetry
-        run: pipx install poetry==1.8.3
+        run: pipx install poetry==2.4.1
       {%- endif %}
 
       - name: Set up Python
