@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
       {%- if package_manager == 'poetry' %}
       - name: Install Poetry
         run: pipx install poetry==1.8.3
