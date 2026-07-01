@@ -40,9 +40,6 @@ env:
   # Set to simple to avoid external images in generated markdown
   REPORTERS_MARKDOWN_TYPE: simple
 
-  # This whitelists GITHUB_TOKEN so zizmor can authenticate with the GitHub API to resolve the uses: clauses in our workflow files.
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 concurrency:
   group: "${{ github.head_ref || github.ref }}-${{ github.workflow }}"
   cancel-in-progress: true
