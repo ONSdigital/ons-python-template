@@ -11,7 +11,9 @@
 [![Linting: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
 [![{{ package_manager }}-managed](https://img.shields.io/badge/{{ package_manager }}-managed-blue)]({{ macros.package_manager_url() }})
+{%- if is_public_repo %}
 [![License - MIT](https://img.shields.io/badge/licence%20-MIT-1ac403.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/blob/main/LICENSE)
+{%- endif %}
 
 {{ repository_description }}
 
@@ -28,7 +30,9 @@
     - [Run Tests with Coverage](#run-tests-with-coverage)
     - [Linting and Formatting](#linting-and-formatting)
 - [Contributing](#contributing)
+{%- if is_public_repo %}
 - [License](#license)
+{%- endif %}
 <!-- markdown-link-check-enable -->
 
 ## Getting Started
@@ -143,7 +147,13 @@ make megalint
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+{%- if is_public_repo %}
 
 ## License
 
-See [LICENSE](LICENSE) for details.
+Copyright © 2024 [Crown Copyright](https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/) (Office for National Statistics)
+
+Unless stated otherwise, the codebase is released under the [MIT License](LICENSE). This covers both the codebase and any sample code in the documentation.
+
+The documentation in this repo are released under the [Open Government Licence v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
+{%- endif %}

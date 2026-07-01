@@ -14,5 +14,4 @@ elif [[ "$PACKAGE_MANAGER" == "pipenv" ]]; then
 
     # Add content of linter-configs.toml into pyproject.toml
     cat copier_scripts/linter-configs.toml >pyproject.toml
-
 fi
