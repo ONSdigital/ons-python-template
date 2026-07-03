@@ -28,7 +28,7 @@ megalint:  ## Run the mega-linter.
 	docker run --platform linux/amd64 --rm \
 		-v /var/run/docker.sock:/var/run/docker.sock:rw \
 		-v $(shell pwd):/tmp/lint:rw \
-		oxsecurity/megalinter:v8
+		oxsecurity/megalinter:v9
 
 .PHONY: update-template-packages
 update-template-packages:  ## Refresh package-manager template files and lockfiles.

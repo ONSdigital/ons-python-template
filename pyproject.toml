@@ -8,19 +8,21 @@ readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.10"
-copier = "^9.11.3"
+python = "^3.11.15"
+copier = "^9.16.0"
+# Pinned to fix low severity vulnerability GHSA-5239-wwwm-4pmq (transitive dep via copier/pytest)
+pygments = "^2.20.0"
 
 [tool.poetry.group.dev.dependencies]
 # :TODO: Remove pylint when ruff supports all pylint rules
-pylint = "^4.0.4"
+pylint = "^4.0.6"
 # :TODO: Remove black when ruff supports all black rules
-black = "^26.1.0"
-pytest = "^9.0.2"
+black = "^26.5.1"
+pytest = "^9.1.1"
 pytest-xdist = "^3.6.1"
-ruff = "^0.14.14"
-pytest-cov = "^7.0.0"
-mypy = "^1.19.1"
+ruff = "^0.15.20"
+pytest-cov = "^7.1.0"
+mypy = "^2.1.0"
 
 [build-system]
 requires = ["poetry-core"]

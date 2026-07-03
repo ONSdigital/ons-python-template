@@ -38,3 +38,7 @@ FILEIO_REPORTER: false
 MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .markdown-lint.yml
 
 YAML_V8R_FILTER_REGEX_EXCLUDE: "dependabot.yml" # Dependabot yaml in SchemaStore is currently not up to date. Dependabot is validated on push by GitHub by default.
+
+# This whitelists GITHUB_TOKEN so zizmor can authenticate with the GitHub API to resolve the uses: clauses in our workflow files.
+ACTION_ZIZMOR_UNSECURED_ENV_VARIABLES:
+  - GITHUB_TOKEN

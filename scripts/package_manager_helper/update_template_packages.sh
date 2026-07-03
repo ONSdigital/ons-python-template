@@ -112,10 +112,10 @@ handle_package_manager() {
 
 # Execute the function with different configurations
 log "Refreshing package-manager template files"
-#handle_package_manager poetry false
-#handle_package_manager poetry true
-#handle_package_manager pipenv false
-#handle_package_manager pipenv true
+handle_package_manager poetry false
+handle_package_manager poetry true
+handle_package_manager pipenv false
+handle_package_manager pipenv true
 handle_package_manager uv false
 handle_package_manager uv true
 
