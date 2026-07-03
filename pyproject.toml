@@ -8,7 +8,7 @@ readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.11.15"
+python = "^3.11"
 copier = "^9.16.0"
 # Pinned to fix low severity vulnerability GHSA-5239-wwwm-4pmq (transitive dep via copier/pytest)
 pygments = "^2.20.0"

@@ -10,7 +10,7 @@ name = "pypi"
 # :TODO: Remove black when ruff supports all black rules
 
 [requires]
-python_version = "3.11.15"
+python_version = "3.11"
 
 [pipenv]
 allow_prereleases = true

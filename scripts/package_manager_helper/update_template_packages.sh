@@ -59,7 +59,6 @@ handle_package_manager() {
 
     log_green "Starting ${package_manager} refresh (copier=${has_copier})"
     log "Resetting helper workspace"
-    git restore Pipfile
     rm -f Pipfile.lock poetry.lock uv.lock pyproject.toml
 
     # Determine prefix based on copier
@@ -80,6 +79,7 @@ handle_package_manager() {
         cp pyproject.poetry.toml pyproject.toml
         run_quiet poetry add "${dev_deps[@]}" --group dev
     elif [[ "${package_manager}" == "pipenv" ]]; then
+        cp Pipfile.template Pipfile
         run_quiet pipenv install "${dev_deps[@]}" --dev
     elif [[ "${package_manager}" == "uv" ]]; then
         log_yellow "Preparing uv helper manifest"
@@ -121,6 +121,5 @@ handle_package_manager uv true
 
 # Undo git changes and remove the lock files
 log "Cleaning helper workspace"
-git restore Pipfile
-rm -f Pipfile.lock poetry.lock uv.lock pyproject.toml
+rm -f Pipfile.lock poetry.lock uv.lock pyproject.toml Pipfile
 log "Done"
