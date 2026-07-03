@@ -30,11 +30,17 @@ jobs:
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
           python-version-file: .python-version
+      {%- if package_manager != 'uv' %}
           cache: {{ package_manager }}
+      {%- endif %}
       {%- if package_manager == 'pipenv' %}
 
       - name: Install Pipenv
         run: pipx install pipenv==2023.12.1
+      {%- elif package_manager == 'uv' %}
+
+      - name: Install uv
+        run: pipx install uv==0.11.26
       {%- endif %}
 
       - name: Install dependencies

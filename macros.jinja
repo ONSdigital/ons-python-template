@@ -3,5 +3,17 @@
         https://python-poetry.org/
     {%- elif package_manager == "pipenv" -%}
         https://pipenv.pypa.io/en/latest/
+    {%- elif package_manager == "uv" -%}
+        https://docs.astral.sh/uv/
+    {%- endif -%}
+{%- endmacro -%}
+
+{%- macro package_manager_name() -%}
+    {%- if package_manager == "poetry" -%}
+        Poetry
+    {%- elif package_manager == "pipenv" -%}
+        Pipenv
+    {%- elif package_manager == "uv" -%}
+        uv
     {%- endif -%}
 {%- endmacro -%}
