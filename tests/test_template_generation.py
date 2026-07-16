@@ -108,7 +108,7 @@ def test_poetry_generation_outputs(
     assert (generated_project_dir / ".pre-commit-config.yaml").exists()
     assert not (generated_project_dir / "Pipfile").exists()
     assert not (generated_project_dir / "Pipfile.lock").exists()
-    assert 'pre-commit = "^4.3.0"' in (generated_project_dir / "pyproject.toml").read_text(encoding="utf-8")
+    assert 'pre-commit = "^4.6.0"' in (generated_project_dir / "pyproject.toml").read_text(encoding="utf-8")
     assert "poetry run pre-commit run --all-files" in read_makefile(generated_project_dir)
     assert "entry: make mypy" in read_pre_commit_config(generated_project_dir)
     assert "entry: poetry check" in read_pre_commit_config(generated_project_dir)
@@ -153,7 +153,7 @@ def test_uv_generation_outputs(
     assert not (generated_project_dir / "poetry.lock").exists()
     assert not (generated_project_dir / "Pipfile").exists()
     assert not (generated_project_dir / "Pipfile.lock").exists()
-    assert '"pre-commit>=4.3.0"' in (generated_project_dir / "pyproject.toml").read_text(encoding="utf-8")
+    assert '"pre-commit>=4.6.0"' in (generated_project_dir / "pyproject.toml").read_text(encoding="utf-8")
     assert "We recommend using [uv](https://docs.astral.sh/uv/)" in readme
     assert "pyenv" not in readme
     assert "cache: uv" not in read_ci_workflow(generated_project_dir)
