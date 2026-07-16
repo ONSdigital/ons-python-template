@@ -116,7 +116,7 @@ To get started:
    pipx install copier
    ```
 
-4. **Operation System**: Ubuntu/MacOS
+4. **Operating System**: Ubuntu/macOS
 5. **[Git](https://git-scm.com/)**: Ensure Git is installed and configured.
 6. **[GitHub CLI](https://cli.github.com/)**: [OPTIONAL] Ensure GitHub CLI is installed and you are
    authenticated (`gh auth login`) if you would like to automate the repository creation and configuration like branch
@@ -152,7 +152,7 @@ have been automatically done for you.**
    ```
 
 2. Create a new repo in GitHub.
-   See [GitHub How-to](<https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories>]
+   See [GitHub How-to](https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories)
 
 3. Push your project to the repository on GitHub:
 
@@ -211,7 +211,7 @@ you customise your setup to include only the tools you need, reducing the Docker
 
 ##### Auto-fixing linting issues via GitHub Actions
 
-If you would like to auto-fix issues using MegaLinter and commit the changes back to the PR, you can will need to create
+If you would like to auto-fix issues using MegaLinter and commit the changes back to the PR, you will need to create
 a **Personal Access Token** and add it as
 a [secret to your repository](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
 Without a **PAT** token, commits/PRs made by workflows do not trigger other workflows, including the MegaLinter
