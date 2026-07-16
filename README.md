@@ -422,8 +422,8 @@ There are many alternatives to the tools used in this template, and you may pref
 
 - Extend test suite
 - Add more documentation and developer guidance
+- Update GitHub repo set up to use latest best practices - rulesets etc vs legacy branch protection.
 - Further customisation options for the template:
-    - Ability to choose your own Package Manager (Poetry, Pipenv, PDM, etc.)
     - Ability to choose your own Linting/Formatting tools
     - Ability to choose your own Type Checking tools
     - Ability to configure the GitHub repo setting post-generation via GitHub Template feature.
