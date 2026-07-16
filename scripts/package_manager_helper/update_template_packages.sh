@@ -41,11 +41,13 @@ run_quiet() {
     return 1
 }
 
-prepare_uv_template_pyproject() {
-    log_yellow "Rewriting uv pyproject metadata for template rendering"
+prepare_template_pyproject_metadata() {
+    local package_manager=$1
+    log_yellow "Rewriting ${package_manager} pyproject metadata for template rendering"
     sed -i.bak \
         -e 's/name = "package-manager-helper"/name = "{{ repository_name }}"/' \
-        -e 's/description = "Helper project for generating uv template files"/description = "{{ repository_description }}"/' \
+        -e 's/description = "Helper project for generating template files"/description = "{{ repository_description }}"/' \
+        -e 's/authors = \[{ name = "Template Helper" }\]/authors = [{ name = "{{ repository_owner }}" }]/' \
         pyproject.toml
     rm -f pyproject.toml.bak
 }
@@ -78,6 +80,7 @@ handle_package_manager() {
         log_yellow "Preparing Poetry helper manifest"
         cp pyproject.poetry.toml pyproject.toml
         run_quiet poetry add "${dev_deps[@]}" --group dev
+        prepare_template_pyproject_metadata "Poetry"
     elif [[ "${package_manager}" == "pipenv" ]]; then
         cp Pipfile.template Pipfile
         run_quiet pipenv install "${dev_deps[@]}" --dev
@@ -85,7 +88,7 @@ handle_package_manager() {
         log_yellow "Preparing uv helper manifest"
         cp pyproject.uv.toml pyproject.toml
         run_quiet uv add --dev --no-install-project "${dev_deps[@]}"
-        prepare_uv_template_pyproject
+        prepare_template_pyproject_metadata "uv"
         log_yellow "Rewriting uv lock root package name for template rendering"
         # uv.lock records the helper project's root package name, so rewrite it back to the template variable.
         sed -i.bak 's/name = "package-manager-helper"/name = "{{ repository_name }}"/g' uv.lock

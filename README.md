@@ -49,6 +49,7 @@ This template includes a number of features to help you get started developing y
 - Type checking with [mypy](http://mypy-lang.org/).
 - Testing with [pytest](https://docs.pytest.org/en/stable/)
 - Code Coverage with [pytest-cov](https://pytest-cov.readthedocs.io/en/latest/)
+- Git hook automation with [pre-commit](https://pre-commit.com/) for repository hygiene and Python checks.
 - Continuous Integration using [GitHub Actions](https://docs.github.com/en/actions) with jobs to lint and test your
   project.
 - Security with:
@@ -421,7 +422,6 @@ There are many alternatives to the tools used in this template, and you may pref
 
 - Extend test suite
 - Add more documentation and developer guidance
-- Add support for pre-commit hooks
 - Further customisation options for the template:
     - Ability to choose your own Package Manager (Poetry, Pipenv, PDM, etc.)
     - Ability to choose your own Linting/Formatting tools
@@ -441,6 +441,22 @@ Use `make update-template-packages` when you need to refresh the package-manager
 
 This command regenerates the managed package files for Poetry, Pipenv, and uv, including the lockfiles copied into the
 template. It requires the relevant package-manager CLIs to be installed locally: `poetry`, `pipenv`, and `uv`.
+
+### Pre-commit hooks
+
+This repository includes a `.pre-commit-config.yaml` for lightweight repository checks and Python linting with Ruff.
+
+Install the hooks locally with:
+
+```bash
+make install-pre-commit
+```
+
+Run the full hook set on demand with:
+
+```bash
+make pre-commit
+```
 
 ## Contributing
 

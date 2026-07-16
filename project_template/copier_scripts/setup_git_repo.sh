@@ -48,7 +48,7 @@ if [[ $(git status --porcelain) ]] && create_repo; then
     git add .
 
     if ! commit_status=$(
-        git commit -m "Update contents from base template" 2>&1
+        git commit -m "Update contents from base template" --no-verify 2>&1
     ); then
         error "Commit Failure: $commit_status"
     fi

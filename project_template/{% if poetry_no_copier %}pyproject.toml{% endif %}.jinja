@@ -1,10 +1,14 @@
-[tool.poetry]
+[project]
 name = "{{ repository_name }}"
 version = "0.1.0"
 description = "{{ repository_description }}"
-authors = ["{{ repository_owner }}"]
-license = "MIT"
 readme = "README.md"
+license = "MIT"
+authors = [{ name = "{{ repository_owner }}" }]
+requires-python = ">=3.11"
+dynamic = ["dependencies"]
+
+[tool.poetry]
 package-mode = false
 
 [tool.poetry.dependencies]
@@ -17,6 +21,6 @@ pylint = "^4.0.6"
 black = "^26.5.1"
 pytest = "^9.1.1"
 pytest-xdist = "^3.8.0"
-ruff = "^0.15.20"
+ruff = "^0.15.21"
 pytest-cov = "^7.1.0"
-mypy = "^2.1.0"
+mypy = "^2.3.0"

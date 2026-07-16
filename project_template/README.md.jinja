@@ -81,6 +81,12 @@ Ensure you have the following installed:
    make install-dev
    ```
 
+   Install the Git hooks used for local validation:
+
+   ```bash
+   make install-pre-commit
+   ```
+
    To install only production dependencies, run:
 
    ```bash
@@ -134,6 +140,12 @@ To auto-format the Python code, and correct fixable linting issues, run:
 
 ```bash
 make format
+```
+
+To run the configured pre-commit hooks across the repository, run:
+
+```bash
+make pre-commit
 ```
 
 #### MegaLinter (Lint/Format non-python files)

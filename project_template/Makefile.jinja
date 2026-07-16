@@ -26,6 +26,14 @@ lint:  ## Run all linters (black/ruff/pylint/mypy).
 	{{ package_manager }} run ruff check .
 	make mypy
 
+.PHONY: pre-commit
+pre-commit:  ## Run all pre-commit hooks across the repository.
+	{{ package_manager }} run pre-commit run --all-files
+
+.PHONY: install-pre-commit
+install-pre-commit:  ## Install the local git pre-commit hooks.
+	{{ package_manager }} run pre-commit install
+
 .PHONY: test
 test:  ## Run the tests and check coverage.
 	{{ package_manager }} run pytest -n auto --cov={{ module_name }} --cov-report term-missing --cov-fail-under=100
