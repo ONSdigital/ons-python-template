@@ -12,7 +12,5 @@ dependencies = []
 package = false
 
 [dependency-groups]
-dev = [
-    # :TODO: Remove pylint when ruff supports all pylint rules
-    # :TODO: Remove black when ruff supports all black rules
-]
+# :TODO: Remove pylint when ruff supports all pylint rules
+dev = []

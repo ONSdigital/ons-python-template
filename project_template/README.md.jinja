@@ -7,8 +7,7 @@
 [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/codeql.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/codeql.yml)
 {%- endif %}
 
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Linting: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
 [![{{ package_manager }}-managed](https://img.shields.io/badge/{{ package_manager }}-managed-blue)]({{ macros.package_manager_url() }})
 {%- if is_public_repo %}
@@ -125,8 +124,8 @@ Various tools are used to lint and format the code in this project.
 
 #### Python
 
-The project uses [Ruff](https://github.com/astral-sh/ruff), [pylint](https://pylint.pycqa.org/en/latest/index.html)
-and [black](https://black.readthedocs.io/en/stable/) for linting and formatting of the Python code.
+The project uses [Ruff](https://github.com/astral-sh/ruff) and [pylint](https://pylint.pycqa.org/en/latest/index.html)
+for linting and formatting of the Python code.
 
 The tools are configured using the `pyproject.toml` file.
 

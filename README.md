@@ -45,7 +45,6 @@ This template includes a number of features to help you get started developing y
     - [Ruff](https://github.com/astral-sh/ruff) - An all-in-one alternative to tools such as flake8, isort, pydocstyle,
       pyupgrade, autoflake etc.
     - [pylint](https://pylint.pycqa.org/en/latest/index.html)
-    - [black](https://black.readthedocs.io/en/stable/)
 - Type checking with [mypy](http://mypy-lang.org/).
 - Testing with [pytest](https://docs.pytest.org/en/stable/)
 - Code Coverage with [pytest-cov](https://pytest-cov.readthedocs.io/en/latest/)
@@ -287,7 +286,7 @@ The structure of the templated repo is as follows:
 ├── Makefile                          # A script used with the make build automation tool, containing commands to automate common tasks.
 ├── PIRR.md                           # Private Internal Reasoning Record (PIRR) for the repository, documenting the reasoning for the private/internal status of the repository. (Private/Internal Repos Only)
 ├── poetry.lock                       # Lock file for Poetry, pinning exact versions of dependencies to ensure consistent builds. (Exists if poetry is selected as the package manager)
-├── pyproject.toml                    # Central project configuration file for Python, used by Poetry or uv and tooling like Ruff, black etc.
+├── pyproject.toml                    # Central project configuration file for Python, used by Poetry or uv and tooling like Ruff etc.
 ├── Pipfile                           # Used by pipenv package manager to specify dependencies and their versions. (Exists if pipenv is selected as the package manager)
 ├── Pipfile.lock                      # Lock file for Pipenv, pinning exact versions of dependencies to ensure consistent builds. (Exists if pipenv is selected as the package manager)
 ├── uv.lock                           # Lock file for uv, pinning exact versions of dependencies to ensure consistent builds. (Exists if uv is selected as the package manager)
@@ -321,11 +320,11 @@ prefer. See the [Alternatives Software/Tools][alternative-software-tools] sectio
   written in Rust.*
 - *Ruff is also designed to be more extensible and configurable than the tools it replaces.*
 
-*3. Why use pylint and black when Ruff offers similar functionality?*
+*3. Why use pylint when Ruff offers similar functionality?*
 
-- *Ruff is a newer tool that does not yet fully implement the features of pylint and black. While fuller support is
-  under development, using these tools in addition to Ruff is recommended for now. Once Ruff has fuller support for
-  these tools, it is recommended to use Ruff as the primary tool for linting and formatting.*
+- *Ruff is a newer tool that does not yet fully implement all the rules of pylint. While fuller support is
+  under development, using pylint in addition to Ruff is recommended for now. Once Ruff has fuller support,
+  it is recommended to use Ruff as the primary tool for linting.*
 
 *4. Why use mypy for type checking instead of pytype, pyright, or pyre?*
 

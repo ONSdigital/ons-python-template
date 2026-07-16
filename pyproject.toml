@@ -19,8 +19,6 @@ copier = "^9.17.0"
 pre-commit = "^4.6.0"
 # :TODO: Remove pylint when ruff supports all pylint rules
 pylint = "^4.0.6"
-# :TODO: Remove black when ruff supports all black rules
-black = "^26.5.1"
 pytest = "^9.1.1"
 pytest-xdist = "^3.8.0"
 ruff = "^0.15.21"
@@ -30,9 +28,6 @@ mypy = "^2.3.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.black]
-line-length = 120
 
 [tool.ruff]
 line-length = 120
@@ -68,9 +63,6 @@ ignore = [
     "D205",
     # Allow missing docstring, remove to enforce docstrings across the board
     "D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107",
-    # Disable line length check as it is handled by black
-    # :TODO: Remove E501 when ruff supports all black rules
-    "E501",
     # indentation contains tabs
     "W191",
 ]
