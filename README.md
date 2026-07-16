@@ -509,9 +509,9 @@ To run MegaLinter, ensure you have **Docker** installed on your system.
 > Note: If you use Colima for Docker on macOS, run `colima start --edit` and
 > set `mountType: virtiofs` in the profile YAML so bind mounts work correctly
 > with `make megalint`.
-
+> ---
 > Note: The initial run may take some time to download the Docker image. Subsequent executions will be considerably
-> faster due to Docker caching.
+> faster due to Docker caching. :rocket:
 
 To start the linter and automatically fix fixable issues, run:
 
