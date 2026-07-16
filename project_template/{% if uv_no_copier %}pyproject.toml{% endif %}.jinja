@@ -3,6 +3,8 @@ name = "{{ repository_name }}"
 version = "0.1.0"
 description = "{{ repository_description }}"
 readme = "README.md"
+license = "MIT"
+authors = [{ name = "{{ repository_owner }}" }]
 requires-python = ">=3.11"
 dependencies = []
 
@@ -14,7 +16,8 @@ dev = [
     "black>=26.5.1",
     # :TODO: Remove pylint when ruff supports all pylint rules
     # :TODO: Remove black when ruff supports all black rules
-    "mypy>=2.2.0",
+    "mypy>=2.3.0",
+    "pre-commit>=4.6.0",
     "pylint>=4.0.6",
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",

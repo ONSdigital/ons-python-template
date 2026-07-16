@@ -18,6 +18,16 @@ def read_ci_workflow(destination: Path) -> str:
     return (destination / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
 
 
+def read_makefile(destination: Path) -> str:
+    """Read the generated Makefile content."""
+    return (destination / "Makefile").read_text(encoding="utf-8")
+
+
+def read_pre_commit_config(destination: Path) -> str:
+    """Read the generated pre-commit configuration."""
+    return (destination / ".pre-commit-config.yaml").read_text(encoding="utf-8")
+
+
 def assert_public_visibility_outputs(destination: Path) -> None:
     """Assert the public-repository specific files and README content."""
     assert (destination / "LICENSE").exists()
@@ -95,8 +105,14 @@ def test_poetry_generation_outputs(
 
     assert (generated_project_dir / "pyproject.toml").exists()
     assert (generated_project_dir / "poetry.lock").exists()
+    assert (generated_project_dir / ".pre-commit-config.yaml").exists()
     assert not (generated_project_dir / "Pipfile").exists()
     assert not (generated_project_dir / "Pipfile.lock").exists()
+    assert 'pre-commit = "^4.6.0"' in (generated_project_dir / "pyproject.toml").read_text(encoding="utf-8")
+    assert "poetry run pre-commit run --all-files" in read_makefile(generated_project_dir)
+    assert "entry: make mypy" in read_pre_commit_config(generated_project_dir)
+    assert "entry: poetry check" in read_pre_commit_config(generated_project_dir)
+    assert "entry: poetry lock" in read_pre_commit_config(generated_project_dir)
 
 
 def test_pipenv_generation_outputs(
@@ -109,7 +125,12 @@ def test_pipenv_generation_outputs(
     assert (generated_project_dir / "pyproject.toml").exists()
     assert (generated_project_dir / "Pipfile").exists()
     assert (generated_project_dir / "Pipfile.lock").exists()
+    assert (generated_project_dir / ".pre-commit-config.yaml").exists()
     assert not (generated_project_dir / "poetry.lock").exists()
+    assert 'pre-commit = "*"' in (generated_project_dir / "Pipfile").read_text(encoding="utf-8")
+    assert "pipenv run pre-commit run --all-files" in read_makefile(generated_project_dir)
+    assert "entry: pipenv verify" in read_pre_commit_config(generated_project_dir)
+    assert "entry: pipenv lock" in read_pre_commit_config(generated_project_dir)
 
 
 def test_uv_generation_outputs(
@@ -128,13 +149,18 @@ def test_uv_generation_outputs(
 
     assert (generated_project_dir / "pyproject.toml").exists()
     assert (generated_project_dir / "uv.lock").exists()
+    assert (generated_project_dir / ".pre-commit-config.yaml").exists()
     assert not (generated_project_dir / "poetry.lock").exists()
     assert not (generated_project_dir / "Pipfile").exists()
     assert not (generated_project_dir / "Pipfile.lock").exists()
+    assert '"pre-commit>=4.6.0"' in (generated_project_dir / "pyproject.toml").read_text(encoding="utf-8")
     assert "We recommend using [uv](https://docs.astral.sh/uv/)" in readme
     assert "pyenv" not in readme
     assert "cache: uv" not in read_ci_workflow(generated_project_dir)
     assert "pipx install uv==0.11.26" in read_ci_workflow(generated_project_dir)
+    assert "uv run pre-commit run --all-files" in read_makefile(generated_project_dir)
+    assert "entry: uv lock --check" in read_pre_commit_config(generated_project_dir)
+    assert "entry: uv lock" in read_pre_commit_config(generated_project_dir)
 
 
 def test_regeneration_poetry_to_uv_cleans_stale_files(

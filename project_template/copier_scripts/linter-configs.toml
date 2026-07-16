@@ -46,7 +46,7 @@ ignore = [
 convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = [
+"**/tests/**/*.py" = [
     # Allow use of assert statements in tests
     "S101",
 ]

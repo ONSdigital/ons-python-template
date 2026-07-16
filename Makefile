@@ -9,7 +9,21 @@ all: ## Show the available make targets.
 
 .PHONY: lint
 lint:  ## Run Python linter
-	echo "Not implemented yet"
+	poetry run ruff check .
+	poetry run ruff format --check .
+
+.PHONY: format
+format:  ## Format and fix Python code.
+	poetry run ruff check . --fix
+	poetry run ruff format .
+
+.PHONY: pre-commit
+pre-commit:  ## Run all pre-commit hooks across the repository.
+	poetry run pre-commit run --all-files
+
+.PHONY: install-pre-commit
+install-pre-commit:  ## Install the local git pre-commit hooks.
+	poetry run pre-commit install
 
 .PHONY: test
 test:  ## Run the tests

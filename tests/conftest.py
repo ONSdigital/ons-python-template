@@ -9,7 +9,6 @@ from pathlib import Path
 
 import pytest
 
-
 REQUIRED_TEMPLATE_ANSWERS = {
     "repository_name": "test-template",
     "repository_description": "Template generation smoke test",

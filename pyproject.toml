@@ -1,17 +1,22 @@
-[tool.poetry]
+[project]
 name = "ons-python-template"
 version = "0.1.0"
 description = "A Python starter template designed to jump start your next Python project"
-authors = ["ONSdigital"]
-license = "MIT"
 readme = "README.md"
+license = "MIT"
+authors = [{ name = "ONSdigital" }]
+requires-python = ">=3.11"
+dynamic = ["dependencies"]
+
+[tool.poetry]
 package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
-copier = "^9.16.0"
+copier = "^9.17.0"
 
 [tool.poetry.group.dev.dependencies]
+pre-commit = "^4.6.0"
 # :TODO: Remove pylint when ruff supports all pylint rules
 pylint = "^4.0.6"
 # :TODO: Remove black when ruff supports all black rules
@@ -20,7 +25,7 @@ pytest = "^9.1.1"
 pytest-xdist = "^3.8.0"
 ruff = "^0.15.21"
 pytest-cov = "^7.1.0"
-mypy = "^2.2.0"
+mypy = "^2.3.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -74,9 +79,13 @@ ignore = [
 convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = [
+"**/tests/**/*.py" = [
     # Allow use of assert statements in tests
     "S101",
+    # Allow subprocess use in test harness helpers
+    "S603",
+    # Allow localized imports inside tests
+    "PLC0415",
 ]
 
 [tool.ruff.format]
