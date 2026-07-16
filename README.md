@@ -429,21 +429,34 @@ There are many alternatives to the tools used in this template, and you may pref
 - Integrate with the ONS Software Developer Portal.
 - Ability to update the project with the latest template changes.
 
+---
+
 ## Development
 
-:TODO: Add instructions for development
+Get started with development by running the following commands.
+A Makefile is provided to simplify common development tasks. To view all available commands, run:
 
-### Maintainer Commands
+```bash
+make
+```
 
-Use `make update-template-packages` when you need to refresh the package-manager-specific template files under
-`project_template/` after changing the dependency sets or package-manager template configuration.
+### Installation
 
-This command regenerates the managed package files for Poetry, Pipenv, and uv, including the lockfiles copied into the
-template. It requires the relevant package-manager CLIs to be installed locally: `poetry`, `pipenv`, and `uv`.
+Install all dependencies including dev:
 
-### Pre-commit hooks
+```bash
+make install-dev
+```
 
-This repository includes a `.pre-commit-config.yaml` for lightweight repository checks and Python linting with Ruff.
+Install only production dependencies:
+
+```bash
+make install
+```
+
+### Pre-commit Hooks
+
+This repository includes a `.pre-commit-config.yaml` for repository hygiene checks and Python linting with Ruff.
 
 Install the hooks locally with:
 
@@ -456,6 +469,72 @@ Run the full hook set on demand with:
 ```bash
 make pre-commit
 ```
+
+### Run Tests
+
+The unit tests are written using the [pytest](https://docs.pytest.org/en/stable/) framework. To run the tests, run:
+
+```bash
+make test
+```
+
+### Linting and Formatting
+
+Various tools are used to lint and format the code in this project.
+
+#### Python
+
+The project uses [Ruff](https://github.com/astral-sh/ruff) and [pylint](https://pylint.pycqa.org/en/latest/index.html)
+for linting and formatting of the Python code. The tools are configured using `pyproject.toml`.
+
+To lint the Python code, run:
+
+```bash
+make lint
+```
+
+To auto-format the Python code and fix linting issues, run:
+
+```bash
+make format
+```
+
+#### MegaLinter (non-Python files)
+
+[MegaLinter](https://github.com/oxsecurity/megalinter) is used to lint non-Python files in the project (YAML, GitHub
+Actions, Shell scripts, etc.). It is configured using `.mega-linter.yml`.
+
+To run MegaLinter, ensure you have **Docker** installed on your system.
+
+> Note: If you use Colima for Docker on macOS, run `colima start --edit` and
+> set `mountType: virtiofs` in the profile YAML so bind mounts work correctly
+> with `make megalint`.
+
+> Note: The initial run may take some time to download the Docker image. Subsequent executions will be considerably
+> faster due to Docker caching.
+
+To start the linter and automatically fix fixable issues, run:
+
+```bash
+make megalint
+```
+
+To run only a specific linter, pass the `LINTER` variable:
+
+```bash
+make megalint LINTER=YAML_YAMLLINT
+```
+
+This maps to MegaLinter's `ENABLE_LINTERS` environment variable. See the
+[supported linters list](https://megalinter.io/latest/supported-linters/) for valid names.
+
+### Maintainer Commands
+
+Use `make update-template-packages` when you need to refresh the package-manager-specific template files under
+`project_template/` after changing the dependency sets or package-manager template configuration.
+
+This command regenerates the managed package files for Poetry, Pipenv, and uv, including the lockfiles copied into the
+template. It requires the relevant package-manager CLIs to be installed locally: `poetry`, `pipenv`, and `uv`.
 
 ## Contributing
 

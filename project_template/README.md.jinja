@@ -158,6 +158,10 @@ configured using the `.mega-linter.yml` file.
 
 To run MegaLinter, ensure you have **Docker** installed on your system.
 
+> Note: If you use Colima for Docker on macOS, run `colima start --edit` and
+> set `mountType: virtiofs` in the profile YAML so bind mounts work correctly
+> with `make megalint`.
+
 > Note: The initial run may take some time to download the Docker image. However, subsequent executions will be
 > considerably faster due to Docker caching. :rocket:
 
@@ -166,6 +170,15 @@ To start the linter and automatically rectify fixable issues, run:
 ```bash
 make megalint
 ```
+
+To run only a specific linter, pass `LINTER` variable:
+
+```bash
+make megalint LINTER=YAML_YAMLLINT
+```
+
+This maps to MegaLinter's `ENABLE_LINTERS` environment variable. See the
+[supported linters list](https://megalinter.io/latest/supported-linters/) for valid names.
 
 ## Contributing
 

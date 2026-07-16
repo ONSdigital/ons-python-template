@@ -38,11 +38,12 @@ install-dev:  ## Install the dependencies including dev.
 	poetry install
 
 .PHONY: megalint
-megalint:  ## Run the mega-linter.
+megalint:  ## Run the mega-linter. Use LINTER=NAME to run only one.
 	docker run --platform linux/amd64 --rm \
 		-v /var/run/docker.sock:/var/run/docker.sock:rw \
 		-v $(shell pwd):/tmp/lint:rw \
-		oxsecurity/megalinter:v9
+		$(if $(LINTER),-e ENABLE_LINTERS=$(LINTER),) \
+		ghcr.io/oxsecurity/megalinter:v9
 
 .PHONY: update-template-packages
 update-template-packages:  ## Refresh package-manager template files and lockfiles.
