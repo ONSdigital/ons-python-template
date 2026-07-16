@@ -25,6 +25,10 @@ make test
 
 `make test` must stay scoped to `tests/`; do not include `project_template/tests` in root test runs.
 
+When auditing the repository structure, remember that important template files live under hidden paths such as
+`project_template/.github/` and root `.github/`. Prefer `rg --files -uu` over `rg --files` when you need a complete
+file inventory.
+
 To render the current local template for manual testing, use:
 
 ```bash
@@ -58,10 +62,14 @@ Key files and directories:
 - `project_template/README.md.jinja`: generated README.
 - `project_template/Makefile.jinja`: generated project commands.
 - `project_template/.github/workflows/ci.yml.jinja`: generated CI workflow.
+- `project_template/.github/`: generated GitHub metadata such as workflows, CODEOWNERS, issue templates, and Dependabot.
 - `project_template/copier_scripts/run_tasks.sh`: task entrypoint run after generation.
+- `project_template/copier_scripts/helpers.sh`: shared shell functions used by post-copy git setup.
+- `project_template/copier_scripts/setup_git_repo.sh`: optional GitHub/Git repository bootstrap logic.
 - `project_template/copier_scripts/setup_package_manager.sh`: removes unselected package-manager files and appends tool config.
 - `project_template/copier_scripts/cleanup_conditional_files.sh`: removes stale conditional files when regenerating into an existing directory.
-- `tests/`: smoke tests that render the template with Copier and assert generated output.
+- `tests/test_template_generation.py`: smoke tests that render the template and assert generated output.
+- `tests/conftest.py`: Copier test harness that enforces stable answers and `--vcs-ref=HEAD`.
 
 Jinja is used in both file contents and filenames. Treat filenames like `project_template/{% if poetry_no_copier %}pyproject.toml{% endif %}.jinja` as intentional.
 
@@ -188,6 +196,7 @@ Minimum checks for package-manager or visibility changes:
 - generated package-manager files included and unselected files omitted
 - regeneration into the same destination cleans stale conditional files
 - CI workflow output for package-manager-specific constraints
+- generated hidden files such as `.github/workflows/`, `.github/CODEOWNERS`, and `.pre-commit-config.yaml`
 
 Run:
 
@@ -204,9 +213,11 @@ When changing Jinja templates, validate the rendered output rather than relying 
 For each affected option, render the template and inspect the generated files. Pay particular attention to:
 
 - YAML indentation in GitHub Actions
+- hidden generated files under `.github/` that may be missed by a non-hidden file listing
 - Markdown spacing in README output
 - TOML validity in generated `pyproject.toml`
 - shell syntax in generated scripts
+- pre-commit config and package-manager-specific command snippets in generated files
 - omitted conditional files
 - stale files after regeneration
 
@@ -234,6 +245,7 @@ Avoid assumptions about the current working directory unless explicitly set. Pre
 - Be careful with README spacing around conditional blocks; render both true and false paths when changing conditionals.
 - Keep generated project docs concise and user-facing. Do not document implementation details in generated READMEs unless users need them.
 - Do not remove `copier_scripts` from the template; generated projects remove that directory during post-copy tasks.
+- When reviewing file inventories or searching for affected files, include hidden paths so `.github` template files are not missed.
 - Do not use destructive git commands. The worktree may contain user changes.
 - Use `rg` for searches and `apply_patch` for manual edits.
 
@@ -244,6 +256,7 @@ Take extra care when changing:
 - `copier.yml`
 - conditional filenames under `project_template/`
 - generated GitHub Actions workflows
+- hidden files under `project_template/.github/`
 - generated package-manager files
 - cleanup scripts
 - post-copy scripts
