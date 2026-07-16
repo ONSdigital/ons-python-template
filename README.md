@@ -45,7 +45,6 @@ This template includes a number of features to help you get started developing y
     - [Ruff](https://github.com/astral-sh/ruff) - An all-in-one alternative to tools such as flake8, isort, pydocstyle,
       pyupgrade, autoflake etc.
     - [pylint](https://pylint.pycqa.org/en/latest/index.html)
-    - [black](https://black.readthedocs.io/en/stable/)
 - Type checking with [mypy](http://mypy-lang.org/).
 - Testing with [pytest](https://docs.pytest.org/en/stable/)
 - Code Coverage with [pytest-cov](https://pytest-cov.readthedocs.io/en/latest/)
@@ -116,7 +115,7 @@ To get started:
    pipx install copier
    ```
 
-4. **Operation System**: Ubuntu/MacOS
+4. **Operating System**: Ubuntu/macOS
 5. **[Git](https://git-scm.com/)**: Ensure Git is installed and configured.
 6. **[GitHub CLI](https://cli.github.com/)**: [OPTIONAL] Ensure GitHub CLI is installed and you are
    authenticated (`gh auth login`) if you would like to automate the repository creation and configuration like branch
@@ -152,7 +151,7 @@ have been automatically done for you.**
    ```
 
 2. Create a new repo in GitHub.
-   See [GitHub How-to](<https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories>]
+   See [GitHub How-to](https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories)
 
 3. Push your project to the repository on GitHub:
 
@@ -211,7 +210,7 @@ you customise your setup to include only the tools you need, reducing the Docker
 
 ##### Auto-fixing linting issues via GitHub Actions
 
-If you would like to auto-fix issues using MegaLinter and commit the changes back to the PR, you can will need to create
+If you would like to auto-fix issues using MegaLinter and commit the changes back to the PR, you will need to create
 a **Personal Access Token** and add it as
 a [secret to your repository](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
 Without a **PAT** token, commits/PRs made by workflows do not trigger other workflows, including the MegaLinter
@@ -287,7 +286,7 @@ The structure of the templated repo is as follows:
 ├── Makefile                          # A script used with the make build automation tool, containing commands to automate common tasks.
 ├── PIRR.md                           # Private Internal Reasoning Record (PIRR) for the repository, documenting the reasoning for the private/internal status of the repository. (Private/Internal Repos Only)
 ├── poetry.lock                       # Lock file for Poetry, pinning exact versions of dependencies to ensure consistent builds. (Exists if poetry is selected as the package manager)
-├── pyproject.toml                    # Central project configuration file for Python, used by Poetry or uv and tooling like Ruff, black etc.
+├── pyproject.toml                    # Central project configuration file for Python, used by Poetry or uv and tooling like Ruff etc.
 ├── Pipfile                           # Used by pipenv package manager to specify dependencies and their versions. (Exists if pipenv is selected as the package manager)
 ├── Pipfile.lock                      # Lock file for Pipenv, pinning exact versions of dependencies to ensure consistent builds. (Exists if pipenv is selected as the package manager)
 ├── uv.lock                           # Lock file for uv, pinning exact versions of dependencies to ensure consistent builds. (Exists if uv is selected as the package manager)
@@ -321,11 +320,11 @@ prefer. See the [Alternatives Software/Tools][alternative-software-tools] sectio
   written in Rust.*
 - *Ruff is also designed to be more extensible and configurable than the tools it replaces.*
 
-*3. Why use pylint and black when Ruff offers similar functionality?*
+*3. Why use pylint when Ruff offers similar functionality?*
 
-- *Ruff is a newer tool that does not yet fully implement the features of pylint and black. While fuller support is
-  under development, using these tools in addition to Ruff is recommended for now. Once Ruff has fuller support for
-  these tools, it is recommended to use Ruff as the primary tool for linting and formatting.*
+- *Ruff is a newer tool that does not yet fully implement all the rules of pylint. While fuller support is
+  under development, using pylint in addition to Ruff is recommended for now. Once Ruff has fuller support,
+  it is recommended to use Ruff as the primary tool for linting.*
 
 *4. Why use mypy for type checking instead of pytype, pyright, or pyre?*
 

@@ -17,13 +17,13 @@ clean: ## Clean the temporary files.
 
 .PHONY: format
 format:  ## Format the code.
-	{{ package_manager }} run black .
 	{{ package_manager }} run ruff check . --fix
+	{{ package_manager }} run ruff format .
 
 .PHONY: lint
-lint:  ## Run all linters (black/ruff/pylint/mypy).
-	{{ package_manager }} run black --check .
+lint:  ## Run all linters (ruff/pylint/mypy).
 	{{ package_manager }} run ruff check .
+	{{ package_manager }} run ruff format --check .
 	make mypy
 
 .PHONY: pre-commit
