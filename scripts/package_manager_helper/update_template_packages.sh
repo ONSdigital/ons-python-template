@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-DEV_DEPENDENCIES=("pylint" "black" "pytest" "pytest-xdist" "ruff" "pytest-cov" "mypy")
+DEV_DEPENDENCIES=("pylint" "black" "pytest" "pytest-xdist" "ruff" "pytest-cov" "mypy" "pre-commit")
 TEMPLATE_DIR="../../project_template"
 
 if [[ -t 1 && -z "${NO_COLOR:-}" ]]; then
