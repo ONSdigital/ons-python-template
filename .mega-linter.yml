@@ -24,6 +24,7 @@ DISABLE:
   - SPELL
 
 DISABLE_LINTERS:
+  - REPOSITORY_GITLEAKS # Superseded by REPOSITORY_BETTERLEAKS
   - REPOSITORY_DEVSKIM
   - REPOSITORY_TRUFFLEHOG
   - REPOSITORY_GIT_DIFF
@@ -42,3 +43,7 @@ YAML_V8R_FILTER_REGEX_EXCLUDE: "dependabot.yml" # Dependabot yaml in SchemaStore
 # This whitelists GITHUB_TOKEN so zizmor can authenticate with the GitHub API to resolve the uses: clauses in our workflow files.
 ACTION_ZIZMOR_UNSECURED_ENV_VARIABLES:
   - GITHUB_TOKEN
+
+REPOSITORY_KINGFISHER_ARGUMENTS:
+  - --exclude
+  - "**/.venv/**"
