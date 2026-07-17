@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -26,6 +28,16 @@ def read_makefile(destination: Path) -> str:
 def read_pre_commit_config(destination: Path) -> str:
     """Read the generated pre-commit configuration."""
     return (destination / ".pre-commit-config.yaml").read_text(encoding="utf-8")
+
+
+def assert_python_files_compile(*paths: Path) -> None:
+    """Assert that rendered Python files are syntactically valid."""
+    subprocess.run(
+        [sys.executable, "-m", "py_compile", *[str(path) for path in paths]],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
 
 
 def assert_public_visibility_outputs(destination: Path) -> None:
@@ -244,8 +256,6 @@ def test_uv_generation_requires_confirmation(
     generated_project_dir: Path,
 ) -> None:
     """The uv option should reject an explicit decision not to use uv."""
-    import subprocess
-
     with pytest.raises(subprocess.CalledProcessError) as exc_info:
         copier_runner.copy(
             generated_project_dir,
@@ -255,3 +265,38 @@ def test_uv_generation_requires_confirmation(
         )
 
     assert "You must confirm the use of uv to continue" in exc_info.value.stderr
+
+
+def test_valid_custom_module_name_generates_importable_python(
+    copier_runner: Any,
+    generated_project_dir: Path,
+) -> None:
+    """A custom module name using underscores should render valid Python imports."""
+    copier_runner.copy(
+        generated_project_dir,
+        repository_visibility="public",
+        package_manager="poetry",
+        module_name="custom_module",
+    )
+
+    assert (generated_project_dir / "custom_module").exists()
+    assert_python_files_compile(
+        generated_project_dir / "custom_module" / "__main__.py",
+        generated_project_dir / "tests" / "unit" / "conftest.py",
+    )
+
+
+def test_hyphenated_module_name_is_rejected(
+    copier_runner: Any,
+    generated_project_dir: Path,
+) -> None:
+    """A hyphenated module name should fail validation because it is not import-safe."""
+    with pytest.raises(subprocess.CalledProcessError) as exc_info:
+        copier_runner.copy(
+            generated_project_dir,
+            repository_visibility="public",
+            package_manager="poetry",
+            module_name="bad-name",
+        )
+
+    assert "valid Python package name" in exc_info.value.stderr
