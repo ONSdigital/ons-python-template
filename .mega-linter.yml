@@ -47,3 +47,5 @@ ACTION_ZIZMOR_UNSECURED_ENV_VARIABLES:
 REPOSITORY_KINGFISHER_ARGUMENTS:
   - --exclude
   - "**/.venv/**"
+  - --exclude
+  - "**/.cache/**"

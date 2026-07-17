@@ -30,6 +30,11 @@ def read_pre_commit_config(destination: Path) -> str:
     return (destination / ".pre-commit-config.yaml").read_text(encoding="utf-8")
 
 
+def read_python_version_file(destination: Path) -> str:
+    """Read the generated .python-version file."""
+    return (destination / ".python-version").read_text(encoding="utf-8").strip()
+
+
 def assert_python_files_compile(*paths: Path) -> None:
     """Assert that rendered Python files are syntactically valid."""
     subprocess.run(
@@ -120,6 +125,9 @@ def test_poetry_generation_outputs(
     assert (generated_project_dir / ".pre-commit-config.yaml").exists()
     assert not (generated_project_dir / "Pipfile").exists()
     assert not (generated_project_dir / "Pipfile.lock").exists()
+    assert read_python_version_file(generated_project_dir) == "3.14"
+    assert 'requires-python = ">=3.14"' in (generated_project_dir / "pyproject.toml").read_text(encoding="utf-8")
+    assert 'python = "^3.14"' in (generated_project_dir / "pyproject.toml").read_text(encoding="utf-8")
     assert 'pre-commit = "^4.6.0"' in (generated_project_dir / "pyproject.toml").read_text(encoding="utf-8")
     assert "poetry run pre-commit run --all-files" in read_makefile(generated_project_dir)
     assert "entry: make mypy" in read_pre_commit_config(generated_project_dir)
@@ -139,6 +147,8 @@ def test_pipenv_generation_outputs(
     assert (generated_project_dir / "Pipfile.lock").exists()
     assert (generated_project_dir / ".pre-commit-config.yaml").exists()
     assert not (generated_project_dir / "poetry.lock").exists()
+    assert read_python_version_file(generated_project_dir) == "3.14"
+    assert 'python_version = "3.14"' in (generated_project_dir / "Pipfile").read_text(encoding="utf-8")
     assert 'pre-commit = "*"' in (generated_project_dir / "Pipfile").read_text(encoding="utf-8")
     assert "pipenv run pre-commit run --all-files" in read_makefile(generated_project_dir)
     assert "entry: pipenv verify" in read_pre_commit_config(generated_project_dir)
@@ -165,11 +175,13 @@ def test_uv_generation_outputs(
     assert not (generated_project_dir / "poetry.lock").exists()
     assert not (generated_project_dir / "Pipfile").exists()
     assert not (generated_project_dir / "Pipfile.lock").exists()
+    assert read_python_version_file(generated_project_dir) == "3.14"
+    assert 'requires-python = ">=3.14"' in (generated_project_dir / "pyproject.toml").read_text(encoding="utf-8")
     assert '"pre-commit>=4.6.0"' in (generated_project_dir / "pyproject.toml").read_text(encoding="utf-8")
     assert "We recommend using [uv](https://docs.astral.sh/uv/)" in readme
     assert "pyenv" not in readme
     assert "cache: uv" not in read_ci_workflow(generated_project_dir)
-    assert "pipx install uv==0.11.26" in read_ci_workflow(generated_project_dir)
+    assert "pipx install uv==0.11.29" in read_ci_workflow(generated_project_dir)
     assert "uv run pre-commit run --all-files" in read_makefile(generated_project_dir)
     assert "entry: uv lock --check" in read_pre_commit_config(generated_project_dir)
     assert "entry: uv lock" in read_pre_commit_config(generated_project_dir)
