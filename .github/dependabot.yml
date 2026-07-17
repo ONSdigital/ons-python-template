@@ -11,6 +11,10 @@ updates:
     schedule:
       interval: weekly
 
+    # Only run version updates every 7 days. Does not apply to security updates.
+    cooldown:
+      default-days: 7
+
     groups:
       # Group updates into fewer pull requests
       gh-security-updates:
@@ -23,7 +27,7 @@ updates:
         patterns:
           - "*"
 
-  # Enable Security updates for Python package manager
+  # Enable updates for Python package manager
   - package-ecosystem: pip
 
     # When set to 0, version updates are disabled.
@@ -34,6 +38,10 @@ updates:
     # Every weekday
     schedule:
       interval: daily
+
+    # Only run version updates every 7 days. Does not apply to security updates.
+    cooldown:
+      default-days: 7
 
     groups:
       # Group updates into fewer pull requests
