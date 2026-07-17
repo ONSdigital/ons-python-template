@@ -5,14 +5,14 @@ description = "{{ repository_description }}"
 readme = "README.md"
 license = "MIT"
 authors = [{ name = "{{ repository_owner }}" }]
-requires-python = ">=3.11"
+requires-python = ">=3.14"
 dynamic = ["dependencies"]
 
 [tool.poetry]
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.14"
 
 [tool.poetry.group.dev.dependencies]
 # :TODO: Remove pylint when ruff supports all pylint rules
@@ -20,7 +20,7 @@ copier = "^9.17.0"
 pylint = "^4.0.6"
 pytest = "^9.1.1"
 pytest-xdist = "^3.8.0"
-ruff = "^0.15.21"
+ruff = "^0.15.22"
 pytest-cov = "^7.1.0"
 mypy = "^2.3.0"
 pre-commit = "^4.6.0"

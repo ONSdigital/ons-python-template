@@ -534,7 +534,37 @@ Use `make update-template-packages` when you need to refresh the package-manager
 `project_template/` after changing the dependency sets or package-manager template configuration.
 
 This command regenerates the managed package files for Poetry, Pipenv, and uv, including the lockfiles copied into the
-template. It requires the relevant package-manager CLIs to be installed locally: `poetry`, `pipenv`, and `uv`.
+template.
+
+Prerequisites:
+
+- A Python `3.14.x` interpreter installed locally, at or above the helper's minimum supported patch version (`3.14.6`).
+- `poetry==2.4.1`
+- `pipenv==2026.6.2`
+- `uv==0.11.29`
+
+Run it with:
+
+```bash
+make update-template-packages
+```
+
+How it works in practice:
+
+- The helper reads `project_template/.python-version.jinja` to determine the generated repo's target Python minor version.
+- It resolves a matching Python `3.14.x` interpreter before doing any package-manager work and rejects interpreters below
+  the maintainer minimum patch floor (`3.14.6`).
+- It checks that the installed `poetry`, `pipenv`, and `uv` versions match the pinned maintainer versions above.
+- It does not activate or mutate your current shell environment.
+- It clears active virtualenv / Conda / pyenv overrides for its subprocesses and passes the resolved Python interpreter
+  explicitly to each package manager.
+- Poetry and Pipenv environments used for lock regeneration are isolated under `scripts/package_manager_helper/.cache/`.
+
+If it fails early, the most common causes are:
+
+- Python version required is not installed locally.
+- One of the required CLIs is missing.
+- One of the installed package-manager CLIs does not match the pinned maintainer version.
 
 ## Contributing
 
