@@ -102,7 +102,7 @@ To get started:
 
 #### Prerequisites
 
-1. **Python 3.10+**: We recommend using [pyenv](https://github.com/pyenv/pyenv) or
+1. **Python 3.11+**: We recommend using [pyenv](https://github.com/pyenv/pyenv) or
    [uv](https://docs.astral.sh/uv/) for managing Python versions.
 2. **[Pip](https://pip.pypa.io/en/stable/installation/) or [Pipx](https://pipx.pypa.io/stable/)**
 3. **[Copier](https://github.com/copier-org/copier)**: Install Copier using pip or pipx.

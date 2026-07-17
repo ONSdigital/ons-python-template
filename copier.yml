@@ -71,7 +71,7 @@ repository_visibility:
     - internal
     - private
 
-repository_slug:
+default_module_name:
   type: str
   help: "Not prompted. This is computed for re-use."
   default: "{{ repository_name | lower | replace('-', '_') | replace(' ', '_') }}"
@@ -85,11 +85,11 @@ is_public_repo:
 
 module_name:
   type: str
-  help: "What is your Python module name? (e.g. app/src/{{ repository_slug }})"
-  default: "{{ repository_slug }}"
+  help: "What is your Python module name? (e.g. app / src / {{ default_module_name }})"
+  default: "{{ default_module_name }}"
   validator: >-
-    {% if not (module_name | regex_search('^[a-z][a-z0-9\_\-]+$')) %}
-    Must use a lowercase letter followed by one or more of (a-z, 0-9, _, -).
+    {% if not (module_name | regex_search('^[a-z][a-z0-9_]*$')) %}
+    Must be a valid Python package name: start with a lowercase letter and use only lowercase letters, numbers, and underscores.
     {% endif %}
 
 enable_dependabot_version_updates:
