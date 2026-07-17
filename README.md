@@ -572,14 +572,21 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## License
 
-See [LICENSE](LICENSE) for details.
+Copyright © 2024 [Crown Copyright][crown-copyright] (Office for National Statistics)
+
+Unless stated otherwise, the codebase is released under the [MIT License](LICENSE).
+This covers both the codebase and any sample code in the documentation.
+
+The documentation in this repo are released under the [Open Government Licence v3.0][ogl-v3].
 
 ---
 
 [//]: # (:TODO: Enable link checking once https://github.com/tcort/markdown-link-check/issues/250 is resolved.)
-<!-- markdown-link-check-disable -->
 
 [alternative-software-tools]: #alternatives-softwaretools
 
 [updating-project]: #updating-project-with-template-changes
-<!-- markdown-link-check-enable -->
+
+[crown-copyright]: https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/
+
+[ogl-v3]: https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
