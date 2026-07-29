@@ -16,7 +16,7 @@ python = "^3.11"
 copier = "^9.17.0"
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "^4.6.0"
+pre-commit = "^4.6.1"
 # :TODO: Remove pylint when ruff supports all pylint rules
 pylint = "^4.0.6"
 pytest = "^9.1.1"
