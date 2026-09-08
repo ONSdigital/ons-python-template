@@ -14,6 +14,7 @@ _tasks:
   - >-
     SET_UP_GIT_REPO="{{ set_up_git_repo }}"
     PACKAGE_MANAGER="{{ package_manager }}"
+    PROJECT_TYPE="{{ project_type }}"
     REPO_OWNER="{{ repository_owner }}"
     REPO_NAME="{{ repository_name }}"
     REPO_DESCRIPTION="{{ repository_description }}"
@@ -91,6 +92,14 @@ module_name:
     {% if not (module_name | regex_search('^[a-z][a-z0-9_]*$')) %}
     Must be a valid Python package name: start with a lowercase letter and use only lowercase letters, numbers, and underscores.
     {% endif %}
+
+project_type:
+  type: str
+  help: "What is your Python project type? (e.g. flask / general)"
+  default: "general"
+  choices:
+    - general
+    - flask
 
 enable_dependabot_version_updates:
   type: bool
@@ -180,6 +189,12 @@ is_gh_actions:
   help: "Not prompted. This is computed for re-use."
   default: false
   when: false
+
+is_flask_project:
+  type: bool
+  help: "Not prompted. This is computed for re-use."
+  default: "{{ project_type == 'flask' }}"
+  when: true
 
 poetry_copier:
   type: bool
